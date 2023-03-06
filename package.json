@@ -1,0 +1,22 @@
+{
+  "name": "cmmads",
+  "version": "1.0.0",
+  "description": "centralised mosque management and display system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hypercyte/cmmads.git"
+  },
+  "author": "Mujahid Ahmed",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/hypercyte/cmmads/issues"
+  },
+  "homepage": "https://github.com/hypercyte/cmmads#readme",
+  "dependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
