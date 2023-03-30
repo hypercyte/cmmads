@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
 // port
 // hostname
 // callback
-server.listen(port, 'localhost', () => {
-    console.log(`Listening for requests on port ${port}`);
-});
+//server.listen(port, 'localhost', () => {
+//    console.log(`Listening for requests on port ${port}`);
+//});
 
