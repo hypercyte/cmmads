@@ -11,8 +11,8 @@ const pool = mysql.createPool({
     queueLimit: 0
 })
 
-function executeQuery(query, params) {
-    const [rows, fields] = pool.execute(query, params);
+async function executeQuery(query, params) {
+    const [rows, fields] = await pool.execute(query, params);
     return rows;
 }
 
