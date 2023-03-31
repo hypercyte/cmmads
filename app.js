@@ -1,6 +1,7 @@
 const express = require('express')
 const http = require('http');
 const port = 3000;
+require('./test/db_test')
 
 // Set up express app
 const app = express();
@@ -23,4 +24,3 @@ const server = http.createServer((req, res) => {
 //server.listen(port, 'localhost', () => {
 //    console.log(`Listening for requests on port ${port}`);
 //});
-
