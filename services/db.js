@@ -16,6 +16,11 @@ async function executeQuery(query, params) {
     return rows;
 }
 
+//async function makeQuery(query, params) {
+//    const [rows, fields] = await pool.query(query, params);
+//    return rows;
+//}
+
 module.exports = {
     executeQuery
 }
