@@ -12,9 +12,9 @@ function formatDate(dateStr) {
 // Check if a prayer times table exists for the current year
 async function checkForPrayerTimes() {
     try {
-        const query = `SHOW TABLES LIKE 'prayer_times_${currentYear}'`; // checks if table exists
-        const [rows] = await db.executeQuery(query); // execute query
-        return rows.length > 0; // would return more than 0 if a result is found
+        const query = `SHOW TABLES LIKE 'prayer_times%'`//_${currentYear}'`; // checks if table exists
+        const resultset = await db.executeQuery(query); // execute query
+        return resultset.length > 0; // would return more than 0 if a result is found
     } catch (err) {
         throw err;
     }
