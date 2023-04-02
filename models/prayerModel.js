@@ -30,3 +30,9 @@ async function createPrayerTable() {
         throw err;
     }
 }
+
+module.exports = {
+    checkForPrayerTimes,
+    createPrayerTable,
+    formatDate
+};
