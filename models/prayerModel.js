@@ -9,16 +9,18 @@ function formatDate(dateStr) {
     return formattedDate;
 }
 
+// Check if a prayer times table exists for the current year
 async function checkForPrayerTimes() {
     try {
-        const query = `SHOW TABLES LIKE 'prayer_times_${currentYear}'`;
-        const [rows] = await db.executeQuery(query);
-        return rows.length > 0;
+        const query = `SHOW TABLES LIKE 'prayer_times_${currentYear}'`; // checks if table exists
+        const [rows] = await db.executeQuery(query); // execute query
+        return rows.length > 0; // would return more than 0 if a result is found
     } catch (err) {
         throw err;
     }
 }
 
+// Create a prayer table for the current year
 async function createPrayerTable() {
     try {
         const query = `CREATE TABLE prayer_times_${currentYear} (
