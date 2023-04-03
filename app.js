@@ -14,7 +14,7 @@ const app = express();
 // Listen for requests
 app.listen(port);
 
-app.get('/', (req, res) => {
+app.get('/shahporan', (req, res) => {
     res.send('<p>CMMADS is running</p>')
 })
 
