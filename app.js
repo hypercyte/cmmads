@@ -1,7 +1,12 @@
 const express = require('express')
 const http = require('http');
 const port = 3000;
-require('./test/db_test')
+
+// Database connectivity test
+//require('./test/db_test')
+
+// Run controllers
+require('./controllers/prayerController')
 
 // Set up express app
 const app = express();
