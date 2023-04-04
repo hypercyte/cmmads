@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/hypercyte/cmmads#readme",
   "dependencies": {
+    "csv-parser": "^3.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mysql2": "^3.2.0",
