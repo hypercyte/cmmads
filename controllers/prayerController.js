@@ -16,5 +16,6 @@ model.checkForPrayerTimes().then(tableExists => {
 function createPrayerTimesTable(alreadyExists) {
 	if (alreadyExists) return;
 	model.createPrayerTable();
+    model.importedPrayerTimes();
 }
 

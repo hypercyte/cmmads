@@ -28,22 +28,88 @@ const importedPrayerTimes = () => {
             results.push(row);
         })
         .on('end', () => {
-            return results;
+            exportPrayerTimes(results);
+            //return results;
+            //results.forEach(day => {
+             //   console.log(day);
+            //})
         })
 }
+
+// Export prayer times to the mysql database
+function exportPrayerTimes(prayerTimes) {
+    prayerTimes.forEach(async day => {
+        try {
+            const query = `INSERT INTO prayer_times_${currentYear} (
+                \`DATE\`,
+                \`DAY\`,
+                \`FAJR\`,
+                \`FAJR_JAMAAH\`,
+                \`SUNRISE\`,
+                \`DHUHR\`,
+                \`DHUHR_JAMAAH\`,
+                \`ASR_1\`,
+                \`ASR_2\`,
+                \`ASR_JAMAAH\`,
+                \`MAGHRIB\`,
+                \`MAGHRIB_JAMAAH\`,
+                \`ISHA\`,
+                \`ISHA_JAMAAH\`,
+                \`DAY_OF_YEAR\`
+            ) VALUES (
+                '${day['DATE']}',
+                '${day['DAY']}',
+                '${day['FAJR']}',
+                '${day['FAJR_JAMAAH']}',
+                '${day['SUNRISE']}',
+                '${day['DHUHR']}',
+                '${day['DHUHR_JAMAAH']}',
+                '${day['ASR_1']}',
+                '${day['ASR_2']}',
+                '${day['ASR_JAMAAH']}',
+                '${day['MAGHRIB']}',
+                '${day['MAGHRIB_JAMAAH']}',
+                '${day['ISHA']}',
+                '${day['ISHA_JAMAAH']}',
+                '${day['DAY_OF_YEAR']}'
+            );`; 
+            const resultset = await db.executeQuery(query); // execute query
+            return resultset.length > 0; // would return more than 0 if a result is found
+        } catch (err) {
+            throw err;
+        }
+    })
+}
+
+
+
 
 // Format date to ISO standard format
 // (to allow for use of MYSQL date operators)
 function formatDate(dateStr) {
-    const date = new Date(`${dateStr}-${currentYear}`); // create date object
-    const formattedDate = date.toISOString().slice(0,10); // formats the date to YYYY-MM-DD
+    const splitDate = dateStr.split(' ');
+    //const day = splitDate[0];
+    //const month = splitDate[1];
+    //const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    //const monthNumber = months.indexOf(month) + 1; // 0=Jan, 1=Feb, 2=Mar, etc.
+    //const formattedDate = `${currentYear}-${monthNumber < 10 ? '0' : ''}${monthNumber}-${day < 10 ? '0' : ''}${day}`
+    const hour = "15";
+    const month = getMonth(splitDate[1]);
+    const date = new Date(Date.UTC(currentYear, month, splitDate[0], hour));
+    const formattedDate = date.toISOString().slice(0,10);
+    console.log(formattedDate);
     return formattedDate;
+}
+
+function getMonth(monthStr) {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months.indexOf(monthStr);
 }
 
 // Check if a prayer times table exists for the current year
 async function checkForPrayerTimes() {
     try {
-        const query = `SHOW TABLES LIKE 'prayer_times%'`//_${currentYear}'`; // checks if table exists
+        const query = `SHOW TABLES LIKE 'prayer_times_${currentYear}'`; // checks if table exists
         const resultset = await db.executeQuery(query); // execute query
         return resultset.length > 0; // would return more than 0 if a result is found
     } catch (err) {
@@ -57,6 +123,7 @@ async function createPrayerTable() {
     try {
         const query = `CREATE TABLE prayer_times_${currentYear} (
             date DATE PRIMARY KEY,
+            day VARCHAR(3),
             fajr TIME,
             fajr_jamaah TIME,
             sunrise TIME,
