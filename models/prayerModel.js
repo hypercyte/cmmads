@@ -57,8 +57,21 @@ async function createPrayerTable() {
     try {
         const query = `CREATE TABLE prayer_times_${currentYear} (
             date DATE PRIMARY KEY,
-
-        )`
+            fajr TIME,
+            fajr_jamaah TIME,
+            sunrise TIME,
+            dhuhr TIME,
+            dhuhr_jamaah TIME,
+            asr_1 TIME,
+            asr_2 TIME,
+            asr_jamaah TIME,
+            maghrib TIME,
+            maghrib_jamaah TIME,
+            isha TIME,
+            isha_jamaah TIME,
+            day_of_year INT
+        );`
+        db.executeQuery(query);
     } catch (err) {
         throw err;
     }
@@ -67,5 +80,6 @@ async function createPrayerTable() {
 module.exports = {
     checkForPrayerTimes,
     createPrayerTable,
-    formatDate
+    formatDate,
+    importedPrayerTimes
 };
