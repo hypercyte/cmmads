@@ -82,25 +82,18 @@ function exportPrayerTimes(prayerTimes) {
 }
 
 
-
-
 // Format date to ISO standard format
 // (to allow for use of MYSQL date operators)
 function formatDate(dateStr) {
-    const splitDate = dateStr.split(' ');
-    //const day = splitDate[0];
-    //const month = splitDate[1];
-    //const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    //const monthNumber = months.indexOf(month) + 1; // 0=Jan, 1=Feb, 2=Mar, etc.
-    //const formattedDate = `${currentYear}-${monthNumber < 10 ? '0' : ''}${monthNumber}-${day < 10 ? '0' : ''}${day}`
-    const hour = "15";
-    const month = getMonth(splitDate[1]);
-    const date = new Date(Date.UTC(currentYear, month, splitDate[0], hour));
-    const formattedDate = date.toISOString().slice(0,10);
-    console.log(formattedDate);
+    const splitDate = dateStr.split(' '); // Split date by space (i.e. "31 Mar" -> "31","Mar")
+    const hour = "15"; // Any hour in the day besides 00 so daylight saving doesnt cause a duplicate date at 26 Mar.
+    const month = getMonth(splitDate[1]); // Get the month string (i.e. "Mar" from "31 Mar")
+    const date = new Date(Date.UTC(currentYear, month, splitDate[0], hour)); // Create Date object
+    const formattedDate = date.toISOString().slice(0,10); // Cut ISO string which is compatible with MYSQL Date datatype.
     return formattedDate;
 }
 
+// Get month number based on index in this array.
 function getMonth(monthStr) {
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return months.indexOf(monthStr);
