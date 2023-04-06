@@ -11,11 +11,18 @@ require('./controllers/prayerController')
 // Set up express app
 const app = express();
 
+// Set view engine
+app.set('view engine', 'ejs');
+
 // Listen for requests
 app.listen(port);
 
 app.get('/shahporan', (req, res) => {
-    res.send('<p>CMMADS is running</p>')
+    res.render('pages/index');
+})
+
+app.get('/shahporan/display', (req, res) => {
+    res.render('pages/displayMode');
 })
 
 const server = http.createServer((req, res) => {
