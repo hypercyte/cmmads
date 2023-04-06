@@ -25,6 +25,10 @@ app.get('/shahporan/display', (req, res) => {
     res.render('pages/displayMode');
 })
 
+app.use((req, res) => {
+    res.status(404).render('pages/404');
+})
+
 const server = http.createServer((req, res) => {
     console.log(req);
 });
