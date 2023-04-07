@@ -3,6 +3,25 @@ const csv = require('csv-parser');
 const fs = require('fs');
 const currentYear = new Date().getFullYear();
 
+function getTomorrowsDate() {
+    const today = new Date();
+    return new Date(today.getTime() + (24 * 60 * 60 * 1000)).toISOString().slice(0,10);
+}
+
+// Get prayer times from the database
+const getPrayerTimes = async () => {
+    const today = new Date().toISOString().slice(0, 10); // Get today's date
+    const tomorrow = getTomorrowsDate(); // Get tomorrow's date
+    const query = `SELECT * FROM prayer_times_${currentYear} WHERE \`date\` = ? OR \`date\` = ?`;
+    const params = [today, tomorrow];
+    const resultset = await db.executeQuery(query, params);
+
+    resultset[0]['date'].setHours(15); // Set hours to counter DST adjustment
+    resultset[1]['date'].setHours(15); // Set hours to counter DST adjustment
+
+    return resultset;
+}
+
 // Import prayer times from CSV file provided for the current year
 const importedPrayerTimes = () => {
     const file = `data/prayer-data-${currentYear}.csv`; // Path to file
@@ -29,10 +48,7 @@ const importedPrayerTimes = () => {
         })
         .on('end', () => {
             exportPrayerTimes(results);
-            //return results;
-            //results.forEach(day => {
-             //   console.log(day);
-            //})
+            console.log("Prayer times exported.")
         })
 }
 
@@ -74,7 +90,7 @@ function exportPrayerTimes(prayerTimes) {
                 '${day['DAY_OF_YEAR']}'
             );`; 
             const resultset = await db.executeQuery(query); // execute query
-            return resultset.length > 0; // would return more than 0 if a result is found
+            //return resultset.length > 0; // would return more than 0 if a result is found
         } catch (err) {
             throw err;
         }
@@ -132,6 +148,7 @@ async function createPrayerTable() {
             day_of_year INT
         );`
         db.executeQuery(query);
+        console.log(`...Prayer times table created.`)
     } catch (err) {
         throw err;
     }
@@ -141,5 +158,6 @@ module.exports = {
     checkForPrayerTimes,
     createPrayerTable,
     formatDate,
-    importedPrayerTimes
+    importedPrayerTimes,
+    getPrayerTimes
 };
