@@ -6,7 +6,12 @@ const port = 3000;
 //require('./test/db_test')
 
 // Run controllers
-require('./controllers/prayerController')
+const prayerController = require('./controllers/prayerController.js')
+
+// async function getPrayerTimes() {
+//     const prayers = await prayerController.getPrayerTimes();
+//     return prayers;
+// }
 
 // Set up express app
 const app = express();
@@ -21,8 +26,14 @@ app.get('/shahporan', (req, res) => {
     res.render('pages/index');
 })
 
-app.get('/shahporan/display', (req, res) => {
-    res.render('pages/displayMode');
+app.get('/shahporan/display', async (req, res) => {
+    const prayerTimes = prayerController.getPrayerTimes()
+    .then(out => {
+        console.log(out);
+        res.render('pages/displayMode', { prayers: out });
+    })
+    .catch(err => console.log(err));  
+    
 })
 
 app.use((req, res) => {
