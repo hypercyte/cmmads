@@ -31,6 +31,10 @@ app.get('/shahporan/display', async (req, res) => {
     .then(out => {
         console.log(out);
         res.render('pages/displayMode', { prayers: out });
+        setInterval(() => {
+            res.render('pages/displayMode', { prayers: out, datenow: Date.now() });
+            
+        }, 5000)
     })
     .catch(err => console.log(err));  
     
