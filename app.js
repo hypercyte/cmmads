@@ -33,12 +33,12 @@ app.get('/shahporan/display', async (req, res) => {
         res.render('pages/displayMode', { prayers: out,
             datenow: Date.now() 
          });
-        setInterval(() => {
-            res.render('pages/displayMode', { 
-                prayers: out, 
-                datenow: Date.now() 
-            });
-        }, 5000)
+        // setInterval(() => {
+        //     res.render('pages/displayMode', { 
+        //         prayers: out, 
+        //         datenow: Date.now() 
+        //     });
+        // }, 5000)
     })
     .catch(err => console.log(err));  
     
