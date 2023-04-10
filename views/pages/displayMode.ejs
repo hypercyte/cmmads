@@ -1,52 +1,64 @@
 <html lang="en">
-<%- include("../partials/head.ejs") %>
+  <%- include("../partials/head.ejs") %>
 
-<body>
-  <%- include("../partials/datetime.ejs") %>
+  <body>
+    <%- include("../partials/datetime.ejs") %>
 
-  <div class="container">
-    <div class="left-half">
+    <script>
+      const prayers = <%- JSON.stringify(prayers) %>;
+    </script>
+
+    <div class="container">
+      <div class="left-half">
         <table>
-            <tr>
+          <tr>
             <th></th>
             <th>Start</th>
             <th>Jama'ah</th>
-            </tr>
-            <tr>
+          </tr>
+          <tr>
             <td>Fajr</td>
             <td><%= prayers[0]['fajr'] %></td>
             <td><%= prayers[0]['fajr_jamaah'] %></td>
-            </tr>
-            <tr>
+          </tr>
+          <tr>
             <td>Dhuhr</td>
             <td><%= prayers[0]['dhuhr'] %></td>
             <td><%= prayers[0]['dhuhr_jamaah'] %></td>
-            </tr>
-            <tr>
+          </tr>
+          <tr>
             <td>'Asr 1</td>
             <td><%= prayers[0]['asr_1'] %></td>
             <td rowspan="2"><%= prayers[0]['asr_jamaah'] %></td>
-            </tr>
-            <tr>
+          </tr>
+          <tr>
             <td>'Asr 2</td>
             <td><%= prayers[0]['asr_2'] %></td>
-            </tr>
-            <tr>
+          </tr>
+          <tr>
             <td>Maghrib</td>
             <td><%= prayers[0]['maghrib'] %></td>
             <td><%= prayers[0]['maghrib_jamaah'] %></td>
-            </tr>
-            <tr>
+          </tr>
+          <tr>
             <td>Isha'</td>
             <td><%= prayers[0]['isha'] %></td>
             <td><%= prayers[0]['isha_jamaah'] %></td>
-            </tr>
+          </tr>
         </table>
+      </div>
+      <div class="right-half">
+        <script>
+          const listPrayers = ["fajr", "dhuhr", "asr_2", "maghrib", "isha"];
+          let counter = 0;
+          setInterval(() => {
+            document.getElementById("scrolltimes").innerHTML =
+              prayers[0][listPrayers[counter % 5]];
+            counter++;
+          }, 1000);
+        </script>
+        <p id="scrolltimes"></p>
+      </div>
     </div>
-    <div class="right-half">
-      <%= datenow %>
-    </div>
-</div>
-
-</body>
+  </body>
 </html>
