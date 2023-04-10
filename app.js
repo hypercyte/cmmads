@@ -19,6 +19,7 @@ const app = express();
 // Set view engine
 app.set('view engine', 'ejs');
 
+
 // Listen for requests
 app.listen(port);
 
@@ -35,6 +36,8 @@ app.get('/shahporan/display', async (req, res) => {
     .catch(err => console.log(err));  
     
 })
+
+app.use(express.static('public'))
 
 app.use((req, res) => {
     res.status(404).render('pages/404');
