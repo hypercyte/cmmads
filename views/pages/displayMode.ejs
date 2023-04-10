@@ -46,9 +46,19 @@
             <td><%= prayers[0]['isha_jamaah'] %></td>
           </tr>
         </table>
-    </div>
-    <div class="right-half">
-      <%= datenow %>
+      </div>
+      <div class="right-half">
+        <script>
+          const listPrayers = ["fajr", "dhuhr", "asr_2", "maghrib", "isha"];
+          let counter = 0;
+          setInterval(() => {
+            document.getElementById("scrolltimes").innerHTML =
+              prayers[0][listPrayers[counter % 5]];
+            counter++;
+          }, 1000);
+        </script>
+        <p id="scrolltimes"></p>
+      </div>
     </div>
   </body>
 </html>
