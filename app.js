@@ -30,15 +30,15 @@ app.get('/shahporan/display', async (req, res) => {
     const prayerTimes = prayerController.getPrayerTimes()
     .then(out => {
         console.log(out);
-        res.render('pages/displayMode', { prayers: out,
-            datenow: Date.now() 
-         });
-        // setInterval(() => {
-        //     res.render('pages/displayMode', { 
-        //         prayers: out, 
-        //         datenow: Date.now() 
-        //     });
-        // }, 5000)
+        //res.render('pages/displayMode', { prayers: out,
+        //    datenow: Date.now() 
+        //});
+        setInterval(() => {
+            res.render('pages/displayMode', { 
+                prayers: out, 
+                datenow: Date.now() 
+            });
+        }, 1000)
     })
     .catch(err => console.log(err));  
     
