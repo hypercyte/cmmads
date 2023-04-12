@@ -5,7 +5,7 @@ const currentYear = new Date().getFullYear();
 
 function getTomorrowsDate() {
     const today = new Date();
-    return new Date(today.getTime() + (24 * 60 * 60 * 1000)).toISOString().slice(0,10);
+    return new Date(today.getTime() + (24 * 60 * 60 * 1000)*2).toISOString().slice(0,10);
 }
 
 // Get prayer times from the database
@@ -18,6 +18,8 @@ const getPrayerTimes = async () => {
 
     resultset[0]['date'].setHours(15); // Set hours to counter DST adjustment
     resultset[1]['date'].setHours(15); // Set hours to counter DST adjustment
+
+    console.log("Just fetched latest prayer times from DB.")
 
     return resultset;
 }
