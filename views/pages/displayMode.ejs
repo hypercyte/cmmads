@@ -5,7 +5,7 @@
     <%- include("../partials/datetime.ejs") %>
 
     <script>
-      const prayers = <%- JSON.stringify(prayers) %>;
+      //const prayers = <%- JSON.stringify(prayers) %>;
       setTimeout(() => {
         window.location.reload(1);
       }, 120000);
@@ -63,11 +63,11 @@
       <div class="right-half">
         <!-- <script>
           const listPrayers = ["fajr", "dhuhr", "asr_2", "maghrib", "isha"];
-          let counter = 0;
+          let counter1 = 0;
           setInterval(() => {
             document.getElementById("scrolltimes").innerHTML =
-              prayers[0][listPrayers[counter % 5]];
-            counter++;
+              prayers[0][listPrayers[counter1 % 5]];
+            counter1++;
           }, 1000);
         </script> -->
 
