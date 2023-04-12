@@ -40,7 +40,7 @@ app.get('/shahporan/display', async (req, res) => {
     .catch(err => console.log(err));
 })
 
-app.use(express.static('public'))
+app.use(express.static('./public'));
 
 app.use((req, res) => {
     res.status(404).render('pages/404');
