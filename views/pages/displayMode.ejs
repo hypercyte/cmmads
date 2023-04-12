@@ -6,6 +6,9 @@
 
     <script>
       const prayers = <%- JSON.stringify(prayers) %>;
+      setTimeout(() => {
+        window.location.reload(1);
+      }, 120000);
     </script>
 
     <div class="container">
@@ -15,40 +18,50 @@
             <th></th>
             <th>Start</th>
             <th>Jama'ah</th>
+            <th class="hidden">Jama'ah<br />Tomorrow</th>
           </tr>
           <tr>
             <td>Fajr</td>
             <td><%= prayers[0]['fajr'].slice(0,5) %></td>
             <td><%= prayers[0]['fajr_jamaah'].slice(0,5) %></td>
+            <td class="hidden"><%= prayers[1]['fajr_jamaah'].slice(0,5) %></td>
           </tr>
           <tr>
             <td>Dhuhr</td>
             <td><%= prayers[0]['dhuhr'].slice(0,5) %></td>
             <td><%= prayers[0]['dhuhr_jamaah'].slice(0,5) %></td>
+            <td class="hidden"><%= prayers[1]['dhuhr_jamaah'].slice(0,5) %></td>
           </tr>
           <tr>
-            <td>'Asr 1</td>
+            <td>'Asr <sub class="hidden">Mithl 1</sub></td>
             <td><%= prayers[0]['asr_1'].slice(0,5) %></td>
             <td rowspan="2"><%= prayers[0]['asr_jamaah'].slice(0,5) %></td>
+            <td rowspan="2" class="hidden">
+              <%= prayers[1]['asr_jamaah'].slice(0,5) %>
+            </td>
           </tr>
           <tr>
-            <td>'Asr 2</td>
+            <td>'Asr <sub class="hidden">Mithl 2</sub></td>
             <td><%= prayers[0]['asr_2'].slice(0,5) %></td>
           </tr>
           <tr>
             <td>Maghrib</td>
             <td><%= prayers[0]['maghrib'].slice(0,5) %></td>
             <td><%= prayers[0]['maghrib_jamaah'].slice(0,5) %></td>
+            <td class="hidden">
+              <%= prayers[1]['maghrib_jamaah'].slice(0,5) %>
+            </td>
           </tr>
           <tr>
             <td>Isha'</td>
             <td><%= prayers[0]['isha'].slice(0,5) %></td>
             <td><%= prayers[0]['isha_jamaah'].slice(0,5) %></td>
+            <td class="hidden"><%= prayers[1]['isha_jamaah'].slice(0,5) %></td>
           </tr>
         </table>
       </div>
       <div class="right-half">
-        <script>
+        <!-- <script>
           const listPrayers = ["fajr", "dhuhr", "asr_2", "maghrib", "isha"];
           let counter = 0;
           setInterval(() => {
@@ -56,8 +69,37 @@
               prayers[0][listPrayers[counter % 5]];
             counter++;
           }, 1000);
+        </script> -->
+
+        <script>
+          const announcements = JSON.parse(
+            `<%- JSON.stringify(announcements) %>`
+          );
+          console.log(announcements);
+
+          let counter = 0;
+
+          // JSON parsing needs a bit of time to be ready
+          setTimeout(() => {
+            document.getElementById("announceTitle").innerHTML =
+              announcements[counter % announcements.length]["Title"];
+            document.getElementById("announceContent").innerHTML =
+              announcements[counter % announcements.length]["Content"];
+            counter++;
+          }, 10);
+
+          // Cycle through announcements
+          setInterval(() => {
+            document.getElementById("announceTitle").innerHTML =
+              announcements[counter % announcements.length]["Title"];
+            document.getElementById("announceContent").innerHTML =
+              announcements[counter % announcements.length]["Content"];
+            counter++;
+          }, 1000);
         </script>
-        <p id="scrolltimes"></p>
+
+        <p class="announcements" id="announceTitle"></p>
+        <p class="announcements" id="announceContent"></p>
       </div>
     </div>
   </body>
