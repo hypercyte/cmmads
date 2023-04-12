@@ -37,6 +37,7 @@ header {
 table {
     width: 100%;
     height: 100%;
+    padding-right: 20px;
 }
 
 th, td {
@@ -47,12 +48,35 @@ th, td {
     text-align: center;
 }
 
+td sub {
+    font-weight: 100;
+    font-size:21px;
+}
+
 th {
     font-weight: bold;
     font-size: 20px;
     text-align: center;
 }
 
+.hidden {
+    opacity: 40%;
+}
 
+.announcements {
+    text-align: center;
+    color: #fff;
+    padding: 60px;
+}
+
+#announceTitle {
+    font-weight: 700;
+    font-size: 72;
+}
+
+#announceContent {
+    font-weight: 350;
+    font-size: 64;
+}
 
 
