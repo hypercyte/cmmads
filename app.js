@@ -52,6 +52,11 @@ app.get('/shahporan/register', (req, res) => {
     res.render('pages/register.ejs');
 })
 
+// POST route for register
+app.post('/shahporan/register', (req, res) => {
+    // Implement register post function
+})
+
 // Serve files from public folder
 app.use(express.static('./public'));
 
