@@ -1,1 +1,51 @@
-<h1>Register.ejs</h1>>
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/datetime.ejs") %>
+
+<style>
+    .flex-center {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 75px);
+        flex-direction: column;
+    }
+
+    input, button {
+        margin-bottom: 5px;
+    }
+</style>
+<div class="flex-center">  
+
+<h1>Register Account</h1>
+<form action="/register" method="POST" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div>
+        <input type="text" id="name" name="name" placeholder="Full Name" required>
+    </div>
+    <div>
+        <input type="text" id="email" name="email" placeholder="E-mail address" required>
+    </div>
+    <div>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+    </div>
+    <div>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+    </div>
+    <div>
+        <label style="font-size: small" >
+            <input type="checkbox" onclick="toggleShowPassword()"> Show Password
+        </label>
+    </div>
+    <div>
+        <button type="submit">Submit registration</button>
+    </div>
+</form>
+</div>
+
+<script>
+    function toggleShowPassword() {
+        const password = document.getElementById("password");
+        // If password is of type "password", change to text and vice versa.
+		password.type = password.type === "password" ? "text" : "password";
+    }
+</script>
