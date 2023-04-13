@@ -24,10 +24,12 @@ app.set('view engine', 'ejs');
 // Listen for requests
 app.listen(port);
 
+// Root route
 app.get('/shahporan', (req, res) => {
     res.render('pages/index');
 })
 
+// Async route for display mode
 app.get('/shahporan/display', async (req, res) => {
     const prayerTimes = prayerController.getPrayerTimes()
     const announcements= announcementController.getAnnouncements()
@@ -40,28 +42,21 @@ app.get('/shahporan/display', async (req, res) => {
     .catch(err => console.log(err));
 })
 
+// Route for log-in
 app.get('/shahporan/login', (req, res) => {
     res.render('pages/login.ejs');
 })
 
+// Route for register
 app.get('/shahporan/register', (req, res) => {
     res.render('pages/register.ejs');
 })
 
+// Serve files from public folder
 app.use(express.static('./public'));
 
+// 404 page
 app.use((req, res) => {
     res.status(404).render('pages/404');
 })
 
-const server = http.createServer((req, res) => {
-    console.log(req);
-});
-
-// Listen for requests at given port.
-// port
-// hostname
-// callback
-//server.listen(port, 'localhost', () => {
-//    console.log(`Listening for requests on port ${port}`);
-//});
