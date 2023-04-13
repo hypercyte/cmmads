@@ -40,6 +40,14 @@ app.get('/shahporan/display', async (req, res) => {
     .catch(err => console.log(err));
 })
 
+app.get('/shahporan/login', (req, res) => {
+    res.render('pages/login.ejs');
+})
+
+app.get('/shahporan/register', (req, res) => {
+    res.render('pages/register.ejs');
+})
+
 app.use(express.static('./public'));
 
 app.use((req, res) => {
