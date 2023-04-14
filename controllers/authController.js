@@ -5,8 +5,8 @@ function insertNewUser(name, username, email, hash) {
     model.insertNewUser(name, username, email, hash)
 }
 
-function findUser(username) {
-    model.findUser(username);
+async function findUser(username) {
+    return await model.findUser(username);
 }
 
 module.exports = {

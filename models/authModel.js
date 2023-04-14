@@ -25,8 +25,10 @@ async function insertNewUser(name, username, email, hash) {
 
 async function findUser(username) {
     try {
-        const query = `SELECT * FROM users WHERE \`username\` = '${username}'`
+        const query = `SELECT * FROM users WHERE \`username\` = '${username}'`;
         const resultset = await db.executeQuery(query);
+        console.log("Found user:");
+        console.log(resultset);
         return resultset;
     } catch (err) {
         console.log(err);

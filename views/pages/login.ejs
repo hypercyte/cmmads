@@ -47,7 +47,11 @@
 <div class="flex-center">  
 
 <h1>Login</h1>
-<form action="/login" method="POST" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+<% if(messages.error) { %>
+    <%= messages.error %>       
+<% } %>
+
+<form action="/shahporan/login" method="POST" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
     <div>
         <input type="text" id="username" name="username" placeholder="Username" required>
     </div>
