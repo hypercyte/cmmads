@@ -23,6 +23,16 @@ async function insertNewUser(name, username, email, hash) {
     }
 }
 
+async function findUser(username) {
+    try {
+        const query = `SELECT * FROM users WHERE \`username\` = '${username}'`
+        const resultset = await db.executeQuery(query);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     insertNewUser
 }
