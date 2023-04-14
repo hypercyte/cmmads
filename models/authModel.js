@@ -34,5 +34,6 @@ async function findUser(username) {
 }
 
 module.exports = {
-    insertNewUser
+    insertNewUser,
+    findUser
 }
