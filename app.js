@@ -1,5 +1,8 @@
 const express = require('express')
 const http = require('http');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+
 const port = 3000;
 
 // Database connectivity test
@@ -8,6 +11,8 @@ const port = 3000;
 // Run controllers
 const prayerController = require('./controllers/prayerController.js')
 const announcementController = require('./controllers/announcementController.js')
+const authController = require('./controllers/authController.js')
+
 
 // async function getPrayerTimes() {
 //     const prayers = await prayerController.getPrayerTimes();
@@ -19,6 +24,9 @@ const app = express();
 
 // Set view engine
 app.set('view engine', 'ejs');
+
+// Parse incoming body reqs from clientside
+app.use(express.urlencoded({ extended:false }));
 
 
 // Listen for requests
@@ -35,8 +43,8 @@ app.get('/shahporan/display', async (req, res) => {
     const announcements= announcementController.getAnnouncements()
     Promise.all([prayerTimes, announcements])
     .then(([prayerTimesOut, announcementOut]) => {      
-        console.log(prayerTimesOut);
-        console.log(announcementOut);
+        // console.log(prayerTimesOut);
+        // console.log(announcementOut);
         res.render('pages/displayMode', { prayers: prayerTimesOut, announcements: announcementOut });
     })
     .catch(err => console.log(err));
@@ -52,14 +60,23 @@ app.get('/shahporan/register', (req, res) => {
     res.render('pages/register.ejs');
 })
 
-// POST route for register
+// POST route for login
 app.post('/shahporan/login', (req, res) => {
-    // Implement register post function
+    // Implement login post function
 })
 
 // POST route for register
-app.post('/shahporan/register', (req, res) => {
-    // Implement register post function
+app.post('/shahporan/register', async (req, res) => {
+    const name = req.body.name;
+    const username = req.body.username;
+    const email = req.body.email;
+
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+            authController.insertNewUser(name, username, email, hash);
+            res.redirect('/shahporan/login')
+        });
+    });
 })
 
 // Serve files from public folder
@@ -69,4 +86,3 @@ app.use(express.static('./public'));
 app.use((req, res) => {
     res.status(404).render('pages/404');
 })
-

@@ -3,6 +3,7 @@
 <%- include("../partials/datetime.ejs") %>
 
 <style>
+    /* Center */
     .flex-center {
         display:flex;
         justify-content: center;
@@ -11,8 +12,35 @@
         flex-direction: column;
     }
 
-    input, button {
+    /* Add a bit of space under the button */
+    button {
         margin-bottom: 5px;
+    }
+
+    /* Text fields styling */
+    input {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5;
+        background-color: #f2f2f2;
+        border: none;
+        border-radius: 4px;
+        color: #000;
+        margin-bottom: 10px;
+    }
+
+    /* Text field placeholder styling */
+    input::placeholder {
+        color: #a9a9a9;
+    }
+
+    /* Text field focus styling */
+    input:focus {
+        outline: none;
+        background-color: #e6e6e6;
     }
 </style>
 
@@ -27,12 +55,15 @@
         <input type="password" id="password" name="password" placeholder="Password" required>
     </div>
     <div>
-        <label style="font-size: small" >
+        <label style="font-size: small; display:flex;" >
             <input type="checkbox" onclick="toggleShowPassword()"> Show Password
         </label>
     </div>
-    <div>
+    <div style="margin-top: 20px;">
         <button type="submit">Log in</button>
+    </div>
+    <div style="padding: 20px;">
+        <a style="font-size: small" >Don't have an account? </a><a style="font-size: small" href="register">Register</a>
     </div>
 </form>
 </div>
