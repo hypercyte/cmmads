@@ -35,7 +35,20 @@ async function findUser(username) {
     }
 }
 
+async function findUserByID(id) {
+    try {
+        const query = `SELECT * FROM users WHERE \`ID\` = '${id}'`;
+        const resultset = await db.executeQuery(query);
+        console.log("Found user by ID:");
+        console.log(resultset);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     insertNewUser,
-    findUser
+    findUser,
+    findUserByID
 }

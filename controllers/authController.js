@@ -9,7 +9,12 @@ async function findUser(username) {
     return await model.findUser(username);
 }
 
+async function findUserByID(id) {
+    return await model.findUserByID(id);
+}
+
 module.exports = {
     insertNewUser,
-    findUser
+    findUser,
+    findUserByID
 }

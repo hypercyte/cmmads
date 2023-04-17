@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const Strategy = require('passport-local').Strategy
 
-function init(passport, getUser) {
+function init(passport, getUser, getUserByID) {
     const authenticateUser = async (username, password, done) => {
         const user = await getUser(username);
 
@@ -31,8 +31,7 @@ function init(passport, getUser) {
     })
 
     passport.deserializeUser((id, done) => {
-        return done(null, getUserByID(id)); 
-        // After shift, implement getUsrrBYID
+        return done(null, getUserByID(id));
     })
 }
 

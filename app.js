@@ -18,9 +18,15 @@ const authController = require('./controllers/authController.js')
 
 // Initialise passport
 const initialisePassport = require('./config/passport_config.js')
-initialisePassport(passport, username => {
-    return authController.findUser(username);
-})
+initialisePassport(
+    passport,
+    username => {
+        return authController.findUser(username);
+    },
+    id => {
+        return authController.findUserByID(id);
+    }
+);
 
 // async function getPrayerTimes() {
 //     const prayers = await prayerController.getPrayerTimes();
