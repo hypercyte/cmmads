@@ -156,22 +156,11 @@ async function createPrayerTable() {
     }
 }
 
-function updatePrayerTimes(selectedPrayer, newTime, dateStart, dateEnd) {
+function updatePrayerTimes(selectedPrayer, newTime, dateFrom, dateTo) {
     try {
-        const query = `INSERT INTO users (
-            \`name\`,
-            \`username\`,
-            \`email\`,
-            \`hash\`,
-            \`active\`
-        ) VALUES (
-            '${name}',
-            '${username}',
-            '${email}',
-            '${hash}',
-            false
-        );`; 
-        const resultset = db.executeQuery(query); // execute query
+        const query = `update prayer_times_${currentYear} set \`?\` = '?' where \`DATE\` between '?' and '?';`;
+        const params = [selectedPrayer, newTime, dateFrom, dateTo]; 
+        const resultset = db.executeQuery(query, params); // execute query
         console.log(resultset);
     } catch (err) {
         throw err;
