@@ -156,10 +156,33 @@ async function createPrayerTable() {
     }
 }
 
+function updatePrayerTimes(selectedPrayer, newTime, dateStart, dateEnd) {
+    try {
+        const query = `INSERT INTO users (
+            \`name\`,
+            \`username\`,
+            \`email\`,
+            \`hash\`,
+            \`active\`
+        ) VALUES (
+            '${name}',
+            '${username}',
+            '${email}',
+            '${hash}',
+            false
+        );`; 
+        const resultset = db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     checkForPrayerTimes,
     createPrayerTable,
     formatDate,
     importedPrayerTimes,
-    getPrayerTimes
+    getPrayerTimes,
+    updatePrayerTimes
 };
