@@ -114,7 +114,7 @@ app.post('/shahporan/register', async (req, res) => {
 
 // POST route for updating prayer times
 app.post('/shahporan/admin/update-prayer-times', async (req, res) => {
-    const selectedPrayer = req.body.selectedPrayer;
+    const selectedPrayer = req.body.prayerSelect;
     const time = req.body.newTime;
     const dateFrom = req.body.dateFrom;
     const dateTo = req.body.dateTo;

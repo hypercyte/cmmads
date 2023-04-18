@@ -156,11 +156,13 @@ async function createPrayerTable() {
     }
 }
 
-function updatePrayerTimes(selectedPrayer, newTime, dateFrom, dateTo) {
+async function updatePrayerTimes(selectedPrayer, newTime, dateFrom, dateTo) {
     try {
-        const query = `update prayer_times_${currentYear} set \`?\` = '?' where \`DATE\` between '?' and '?';`;
-        const params = [selectedPrayer, newTime, dateFrom, dateTo]; 
-        const resultset = db.executeQuery(query, params); // execute query
+        console.log(selectedPrayer,newTime,dateFrom,dateTo);
+        const query = `update prayer_times_${currentYear} set \`${selectedPrayer}\` = '${newTime}' where \`DATE\` between ? and ?;`;
+        const params = [dateFrom, dateTo]; 
+        const resultset = await db.executeQuery(query, params); // execute query
+        console.log("updated prayer times:");
         console.log(resultset);
     } catch (err) {
         throw err;
