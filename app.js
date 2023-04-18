@@ -119,7 +119,7 @@ app.post('/shahporan/admin/update-prayer-times', async (req, res) => {
     const dateFrom = req.body.dateFrom;
     const dateTo = req.body.dateTo;
 
-    
+    prayerController.updatePrayerTimes(selectedPrayer, time, dateFrom, dateTo);
 })
 
 // Serve files from public folder
