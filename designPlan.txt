@@ -6,3 +6,41 @@
 
 /views
 
+---------------------
+
+Admin workflow
+
+Funcitonality:
+1- Edit prayer times in bulk
+	- Select two times ranges and adjust a prayer time.
+
+2- View room booking requests
+
+3- Manage user accounts
+
+4- Manage classes and enrolment
+
+5- Optional functionality
+	- Edit a single prayer time
+	- Drop down menu to select bulk or single prayer time
+
+----------------
+
+In order to implement.
+
+1- Edit prayer times in bulk
+	1. Form in admin view:
+		- Prayer to edit ("Fajr", or "Dhuhr", or "Fajr Jama'ah" etc.) Select ONE
+		- Time to change all to ("04:30", "05:00" etc.)
+		- Select date range (using two calendar boxes, or manual date input)
+	2. On Form submit
+		- POST to "/shahporan/admin/prayerEdit":
+			- selectedPrayer [String of prayer name "Fajr", "Dhuhr", "Fajr Jama'ah" etc]
+			- newTime [String of new selected time "HH:MM:SS"]
+			- dateStart [String of starting date of range "YYYY-MM-DD"]
+			- dateEnd [String of starting date of range "YYYY-MM-DD"]
+		- call prayerController.js
+		- call prayerModel.js to make the change 
+				`update prayer_times_${currentYear} set `?` = '?' where `DATE` between '?' and '?';`
+				params = [selectedPrayer, newTime, startDate, endDate]
+		- callback in app.js to give success message
