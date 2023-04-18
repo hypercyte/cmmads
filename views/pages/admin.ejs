@@ -1,0 +1,45 @@
+<html lang="en">
+  <%- include("../partials/head.ejs") %>
+
+  <body>
+    <%- include("../partials/datetime.ejs") %>
+    <h1>Admin</h1>
+    <h2>Update Prayer Times</h2>
+    <div>
+      <form action="/shahporan/admin/update-prayer-times" method="POST">
+        <label for="prayerSelect">Prayer Time:</label>
+        <select id="prayerSelect" name="prayerSelect">
+          <option value="fajr">Fajr</option>
+          <option value="fajr_jamaah">Fajr Jama'ah</option>
+          <option value="dhuhr">Dhuhr</option>
+          <option value="dhuhr_jamaah">Dhuhr Jama'ah</option>
+          <option value="asr_1">Asr Mithl 1</option>
+          <option value="asr_2">Asr Mithl 2</option>
+          <option value="asr_jamaah">Asr Jama'ah</option>
+          <option value="maghrib">Maghrib</option>
+          <option value="maghrib_jamaah">Maghrib Jama'ah</option>
+          <option value="isha">Isha</option>
+          <option value="isha_jamaah">Isha Jama'ah</option>
+        </select>
+    </div>
+      <br><br>
+      <div>
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time">
+      </div>
+      <br><br>
+      <div>
+        <label for="dateFrom">From date</label>
+        <input type="date" id="dateFrom" name="dateFrom">
+      </div>
+      <br><br>
+      <div>
+        <label for="dateTo">To date</label>
+        <input type="date" id="dateTo" name="dateTo">
+      </div>
+      <br><br>
+      <input type="submit" value="Submit">
+    </form>
+    
+  </body>
+</html>
