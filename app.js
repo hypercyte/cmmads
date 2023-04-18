@@ -75,6 +75,11 @@ app.get('/shahporan/display', async (req, res) => {
     .catch(err => console.log(err));
 })
 
+// Route for admin
+app.get('/shahporan/admin', (req, res) => {
+    res.render('pages/admin.ejs');
+})
+
 // Route for log-in
 app.get('/shahporan/login', (req, res) => {
     res.render('pages/login.ejs');
@@ -87,7 +92,7 @@ app.get('/shahporan/register', (req, res) => {
 
 // POST route for login
 app.post('/shahporan/login', passport.authenticate('local', {
-    successRedirect: '/shahporan',
+    successRedirect: '/shahporan/admin',
     failureRedirect: '/shahporan/login',
     failureFlash: true
 }))
