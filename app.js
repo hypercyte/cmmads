@@ -15,6 +15,7 @@ const port = 3000;
 const prayerController = require('./controllers/prayerController.js')
 const announcementController = require('./controllers/announcementController.js')
 const authController = require('./controllers/authController.js')
+const roomController = require('./controllers/roomController.js')
 
 // Initialise passport
 const initialisePassport = require('./config/passport_config.js')
@@ -66,8 +67,8 @@ app.get('/shahporan', (req, res) => {
 
 // Async route for display mode
 app.get('/shahporan/display', async (req, res) => {
-    const prayerTimes = prayerController.getPrayerTimes()
-    const announcements= announcementController.getAnnouncements()
+    const prayerTimes = prayerController.getPrayerTimes();
+    const announcements= announcementController.getAnnouncements();
     Promise.all([prayerTimes, announcements])
     .then(([prayerTimesOut, announcementOut]) => {
         res.render('pages/displayMode', { prayers: prayerTimesOut, announcements: announcementOut });
@@ -79,6 +80,15 @@ app.get('/shahporan/display', async (req, res) => {
 app.get('/shahporan/admin', (req, res) => {
     res.render('pages/admin.ejs');
 })
+
+// Route for admin
+app.get('/shahporan/admin/events-management', (req, res) => {
+    const rooms = roomController.getRooms();
+    Promise.all([rooms])
+    .then(([roomsOut]) => {
+        res.render('pages/adminEventsManagement.ejs', {rooms: roomsOut});
+    })
+});
 
 // Route for log-in
 app.get('/shahporan/login', (req, res) => {
@@ -111,7 +121,6 @@ app.post('/shahporan/register', async (req, res) => {
     });
 })
 
-
 // POST route for updating prayer times
 app.post('/shahporan/admin/update-prayer-times', async (req, res) => {
     const selectedPrayer = req.body.prayerSelect;
@@ -120,6 +129,17 @@ app.post('/shahporan/admin/update-prayer-times', async (req, res) => {
     const dateTo = req.body.dateTo;
 
     prayerController.updatePrayerTimes(selectedPrayer, time, dateFrom, dateTo);
+    res.redirect('/shahporan/admin');
+})
+
+// POST route for adding a room
+app.post('/shahporan/admin/add-room', async (req, res) => {
+    const location = req.body.location;
+
+    roomController.insertNewRoom(location)
+    .then(() => {
+        res.redirect('/shahporan/admin/events-management');
+    })
 })
 
 // Serve files from public folder

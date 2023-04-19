@@ -1,6 +1,6 @@
 const db = require('../services/db'); // db service
 
-// Enter new user data into the database
+// Enter new class data into the database
 async function insertNewClass(title, desc, active, roomID) {
     try {
         const query = `INSERT INTO Classes (

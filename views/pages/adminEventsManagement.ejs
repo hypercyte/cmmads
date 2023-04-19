@@ -1,7 +1,56 @@
 <html lang="en">
   <%- include("../partials/head.ejs") %>
+  <!-- <style>
+    th {
+      color: black;
+    }
+
+    td {
+      color: black;
+    }
+  </style> -->
 
   <body>
     <%- include("../partials/datetime.ejs") %>
+
+    <div id="addRoom">
+      <form action="/shahporan/admin/add-room" method="POST">
+        <div>
+          <label for="location">Location</label>
+          <input type="text" id="location" name="location">
+        </div></br>
+        <button type="submit">Add New Room</button>
+      </form>
+    </div>
+
+    <div id="listRooms">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% rooms.forEach(function(room) { %>
+            <tr>
+              <td><%= room.ID %></td>
+              <td><%= room.Location %></td>
+              <td><button value="<%= room.ID %>" onclick="console.log(this.value)">Edit</button></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>      
+    </div>
   </body>
+
+  <script>
+    const rooms = JSON.parse(`<%- JSON.stringify(rooms) %>`);
+    rooms.forEach(room => {
+      console.log(room.Location);
+    })
+  </script>
+
+
 </html>
