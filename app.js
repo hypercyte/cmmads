@@ -19,7 +19,8 @@ const roomController = require('./controllers/roomController.js')
 const eventsController = require('./controllers/eventsController.js')
 
 // Initialise passport
-const initialisePassport = require('./config/passport_config.js')
+const initialisePassport = require('./config/passport_config.js');
+const { user } = require('./config/db_config.js');
 initialisePassport(
     passport,
     username => {
@@ -57,6 +58,12 @@ app.use(passport.session());
 // Listen for requests
 app.listen(port);
 
+/*=================
+
+GET ROUTING
+
+===================*/
+
 // Root route
 app.get('/shahporan', (req, res) => {
     res.render('pages/index');
@@ -88,11 +95,13 @@ app.get('/shahporan/admin/events-management', (req, res) => {
 });
 
 // Route for room booking/event booking
-app.get('/shahporan/events-booking', (req, res) => {
+app.get('/shahporan/events-booking', async (req, res) => {
+    const user = await req.user;
     const rooms = roomController.getRooms();
-    Promise.all([rooms])
-    .then(([roomsOut]) => {
-        res.render('pages/eventBooking.ejs', {rooms: roomsOut});
+    const events = eventsController.findEventsByUserID(user[0]['ID']);
+    Promise.all([rooms, events])
+    .then(([roomsOut, eventsOut]) => {
+        res.render('pages/eventBooking.ejs', {rooms: roomsOut, events: eventsOut});
     })
 });
 
@@ -106,9 +115,15 @@ app.get('/shahporan/register', (req, res) => {
     res.render('pages/register.ejs');
 })
 
+/*=================
+
+POST ROUTING
+
+===================*/
+
 // POST route for login
 app.post('/shahporan/login', passport.authenticate('local', {
-    successRedirect: '/shahporan/admin',
+    successRedirect: '/shahporan/events-booking',
     failureRedirect: '/shahporan/login',
     failureFlash: true
 }))
@@ -145,6 +160,24 @@ app.post('/shahporan/admin/add-room', async (req, res) => {
     roomController.insertNewRoom(location)
     .then(() => {
         res.redirect('/shahporan/admin/events-management');
+    })
+})
+
+// POST route for requesting room booking
+app.post('/shahporan/request-room-booking', async (req, res) => {
+    const title = req.body.title;
+    const desc = req.body.desc;
+    const date = req.body.date;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+    const roomID = req.body.roomSelect;
+    const user = await req.user;
+    const requestor = user[0]['ID'];
+    
+
+    eventsController.insertNewEvent(title, desc, date, startTime, endTime, roomID, requestor)
+    .then(() => {
+        res.redirect('/shahporan/events-booking');
     })
 })
 

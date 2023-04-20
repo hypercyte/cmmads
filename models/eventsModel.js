@@ -1,18 +1,20 @@
 const db = require('../services/db'); // db service
 
 // Enter new room data into the database
-async function insertNewEvent(title, desc, date, startTime, endTime, roomID) {
+async function insertNewEvent(title, desc, date, startTime, endTime, roomID, requestor) {
     try {
         const query = `INSERT INTO Events (
             \`Title\`,
             \`Description\`,
             \`Date\`,
-            \`RoomsID\`
+            \`RoomsID\`,
+            \`UserID\`
         ) VALUES (
             '${title}',
             '${desc}',
             '${date}',
-            '${roomID}'
+            '${roomID}',
+            '${requestor}'
         );`; 
         const resultset = await db.executeQuery(query); // execute query
         console.log(resultset);
@@ -33,6 +35,28 @@ async function findEventByID(id) {
     }
 }
 
+async function findEventsByUserID(id) {
+    try {
+        const query = `SELECT * FROM Events WHERE \`UserID\` = '${id}'`;
+        const resultset = await db.executeQuery(query);
+        console.log("Found event(s):");
+        console.log(resultset);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function getUnapprovedEvents() {
+    try {
+        const query = `SELECT * FROM Events WHERE \`Approved\` = 0`;
+        const resultset = await db.executeQuery(query);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 async function getEvents() {
     try {
         const query = `SELECT * FROM Events`;
@@ -46,5 +70,7 @@ async function getEvents() {
 module.exports = {
     insertNewEvent,
     getEvents,
-    findEventByID
+    getUnapprovedEvents,
+    findEventByID,
+    findEventsByUserID
 }

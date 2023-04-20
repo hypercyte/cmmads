@@ -6,30 +6,30 @@
 
     <h1>Event booking</h1>
 
-    <form action="/shahporan/book-event" method="POST">
+    <form action="/shahporan/request-room-booking" method="POST">
         <div>
             <label for="title">Event Title: </label>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" name="title" required>
         </div>
         <div>
             <label for="desc">Description: </label>
-            <input type="textarea" id="desc" name="desc">
+            <input type="textarea" id="desc" name="desc" required>
         </div>
         <div>
             <label for="date">Date of Event: </label>
-            <input type="date" id="date" name="date">
+            <input type="date" id="date" name="date" required>
         </div>
         <div>
             <label for="startTime">Start Time: </label>
-            <input type="time" id="startTime" name="startTime">
+            <input type="time" id="startTime" name="startTime" required>
         </div>
         <div>
             <label for="endTime">End Time: </label>
-            <input type="time" id="endTime" name="endTime">
+            <input type="time" id="endTime" name="endTime" required>
         </div>
         <div>
             <label for="roomSelect">Room: </label>
-            <select id="roomSelect" name="roomSelect">
+            <select id="roomSelect" name="roomSelect" required>
             <% rooms.forEach(function(room) { %>
                 <option value="<%= room.ID %>"><%= room.Location %></option>
             <% }); %>
@@ -39,13 +39,29 @@
             <button type="submit">Request Room Booking</button>
         </div>
       </form>
-
 </div>
 
-<script>
-    function toggleShowPassword() {
-        const password = document.getElementById("password");
-        // If password is of type "password", change to text and vice versa.
-		password.type = password.type === "password" ? "text" : "password";
-    }
-</script>
+<div>
+    <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% events.forEach(function(event) { %>
+            <tr>
+              <td><%= event.ID %></td>
+              <td><%= event.Title %></td>
+              <td><%= event.Description %></td>
+              <td><%= event.Date.toLocaleDateString() %></td>
+              <td><%= event.Approved ? 'Approved' : 'Awaiting approval' %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>  
+</div>
