@@ -16,6 +16,7 @@ const prayerController = require('./controllers/prayerController.js')
 const announcementController = require('./controllers/announcementController.js')
 const authController = require('./controllers/authController.js')
 const roomController = require('./controllers/roomController.js')
+const eventsController = require('./controllers/eventsController.js')
 
 // Initialise passport
 const initialisePassport = require('./config/passport_config.js')
