@@ -81,22 +81,47 @@ app.get('/shahporan/display', async (req, res) => {
 })
 
 // Route for admin - home
-app.get('/shahporan/admin', (req, res) => {
+app.get('/shahporan/admin', async (req, res) => {
+    const notAuth = await req.isUnauthenticated();
+    const user = await req.user;
+    if (notAuth) {
+        res.redirect('/shahporan/login');
+        return;
+    } else if (user[0]['isAdmin'] == 0) {
+        res.redirect('/shahporan/events-booking');
+        return;
+    }
+    
     res.render('pages/admin.ejs');
 })
 
 // Route for admin - events management
-app.get('/shahporan/admin/events-management', (req, res) => {
+app.get('/shahporan/admin/events-management', async (req, res) => {
+    const notAuth = await req.isUnauthenticated();
+    const user = await req.user;
+    if (notAuth) {
+        res.redirect('/shahporan/login');
+        return;
+    } else if (user[0]['isAdmin'] == 0) {
+        res.redirect('/shahporan/events-booking');
+        return;
+    }
     const rooms = roomController.getRooms();
-    Promise.all([rooms])
-    .then(([roomsOut]) => {
-        res.render('pages/adminEventsManagement.ejs', {rooms: roomsOut});
+    const eventsWaiting = eventsController.getUnapprovedEvents();
+    Promise.all([rooms, eventsWaiting])
+    .then(([roomsOut, eventsWaitingOut]) => {
+        res.render('pages/adminEventsManagement.ejs', {rooms: roomsOut, eventsWaiting: eventsWaitingOut});
     })
 });
 
 // Route for room booking/event booking
 app.get('/shahporan/events-booking', async (req, res) => {
+    const notAuth = await req.isUnauthenticated();
     const user = await req.user;
+    if (notAuth) {
+        res.redirect('/shahporan/login');
+        return;
+    }
     const rooms = roomController.getRooms();
     const events = eventsController.findEventsByUserID(user[0]['ID']);
     Promise.all([rooms, events])
