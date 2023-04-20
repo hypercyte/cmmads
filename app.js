@@ -30,10 +30,6 @@ initialisePassport(
     }
 );
 
-// async function getPrayerTimes() {
-//     const prayers = await prayerController.getPrayerTimes();
-//     return prayers;
-// }
 
 // Set up express app
 const app = express();
