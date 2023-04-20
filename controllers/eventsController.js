@@ -5,6 +5,14 @@ async function insertNewEvent(title, desc, date, startTime, endTime, roomID, req
     await model.insertNewEvent(title, desc, date, startTime, endTime, roomID, requestor);
 }
 
+async function approveEvent(id) {
+    await model.approveEvent(id);
+}
+
+async function denyEvent(id) {
+    await model.denyEvent(id);
+}
+
 async function findEventByID(id) {
     return await model.findEventByID(id);
 }
@@ -21,10 +29,17 @@ async function getUnapprovedEvents() {
     return await model.getUnapprovedEvents();
 }
 
+async function getApprovedEvents() {
+    return await model.getApprovedEvents();
+}
+
 module.exports = {
     insertNewEvent,
     findEventByID,
     findEventsByUserID,
     getEvents,
-    getUnapprovedEvents
+    getUnapprovedEvents,
+    getApprovedEvents,
+    approveEvent,
+    denyEvent
 }

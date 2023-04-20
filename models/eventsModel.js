@@ -23,6 +23,33 @@ async function insertNewEvent(title, desc, date, startTime, endTime, roomID, req
     }
 }
 
+// Enter new room data into the database
+async function approveEvent(id) {
+    try {
+        const query = `UPDATE Events
+            SET \`Approved\` = 1
+            WHERE \`ID\` = ?;`
+        const params = [id];
+        const resultset = await db.executeQuery(query, params); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Enter new room data into the database
+async function denyEvent(id) {
+    try {
+        const query = `DELETE FROM Events
+            WHERE \`ID\` = ?;`
+        const params = [id];
+        const resultset = await db.executeQuery(query, params); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
 async function findEventByID(id) {
     try {
         const query = `SELECT * FROM Events WHERE \`ID\` = '${id}'`;
@@ -57,6 +84,16 @@ async function getUnapprovedEvents() {
     }
 }
 
+async function getApprovedEvents() {
+    try {
+        const query = `SELECT * FROM Events WHERE \`Approved\` = 1`;
+        const resultset = await db.executeQuery(query);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 async function getEvents() {
     try {
         const query = `SELECT * FROM Events`;
@@ -71,6 +108,9 @@ module.exports = {
     insertNewEvent,
     getEvents,
     getUnapprovedEvents,
+    getApprovedEvents,
     findEventByID,
-    findEventsByUserID
+    findEventsByUserID,
+    approveEvent,
+    denyEvent
 }

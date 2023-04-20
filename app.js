@@ -91,7 +91,7 @@ app.get('/shahporan/admin', async (req, res) => {
         res.redirect('/shahporan/events-booking');
         return;
     }
-    
+
     res.render('pages/admin.ejs');
 })
 
@@ -108,9 +108,14 @@ app.get('/shahporan/admin/events-management', async (req, res) => {
     }
     const rooms = roomController.getRooms();
     const eventsWaiting = eventsController.getUnapprovedEvents();
-    Promise.all([rooms, eventsWaiting])
-    .then(([roomsOut, eventsWaitingOut]) => {
-        res.render('pages/adminEventsManagement.ejs', {rooms: roomsOut, eventsWaiting: eventsWaitingOut});
+    const eventsApproved = eventsController.getApprovedEvents();
+    Promise.all([rooms, eventsWaiting, eventsApproved])
+    .then(([roomsOut, eventsWaitingOut, eventsApprovedOut]) => {
+        res.render('pages/adminEventsManagement.ejs', {
+            rooms: roomsOut,
+            eventsWaiting: eventsWaitingOut,
+            eventsApproved: eventsApprovedOut
+        });
     })
 });
 
@@ -203,6 +208,26 @@ app.post('/shahporan/request-room-booking', async (req, res) => {
     eventsController.insertNewEvent(title, desc, date, startTime, endTime, roomID, requestor)
     .then(() => {
         res.redirect('/shahporan/events-booking');
+    })
+})
+
+// POST route for approving an event
+app.post('/shahporan/admin/approve-event', async (req, res) => {
+    const eventID = req.body.approveButton;
+
+    eventsController.approveEvent(eventID)
+    .then(() => {
+        res.redirect('/shahporan/admin/events-management');
+    })
+})
+
+// POST route for denying an event
+app.post('/shahporan/admin/deny-event', async (req, res) => {
+    const eventID = req.body.denyButton;
+
+    eventsController.denyEvent(eventID)
+    .then(() => {
+        res.redirect('/shahporan/admin/events-management');
     })
 })
 
