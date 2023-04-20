@@ -76,17 +76,26 @@ app.get('/shahporan/display', async (req, res) => {
     .catch(err => console.log(err));
 })
 
-// Route for admin
+// Route for admin - home
 app.get('/shahporan/admin', (req, res) => {
     res.render('pages/admin.ejs');
 })
 
-// Route for admin
+// Route for admin - events management
 app.get('/shahporan/admin/events-management', (req, res) => {
     const rooms = roomController.getRooms();
     Promise.all([rooms])
     .then(([roomsOut]) => {
         res.render('pages/adminEventsManagement.ejs', {rooms: roomsOut});
+    })
+});
+
+// Route for room booking/event booking
+app.get('/shahporan/events-booking', (req, res) => {
+    const rooms = roomController.getRooms();
+    Promise.all([rooms])
+    .then(([roomsOut]) => {
+        res.render('pages/eventBooking.ejs', {rooms: roomsOut});
     })
 });
 
