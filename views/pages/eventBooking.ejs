@@ -1,0 +1,51 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/datetime.ejs") %>
+
+<div>  
+
+    <h1>Event booking</h1>
+
+    <form action="/shahporan/book-event" method="POST">
+        <div>
+            <label for="title">Event Title: </label>
+            <input type="text" id="title" name="title">
+        </div>
+        <div>
+            <label for="desc">Description: </label>
+            <input type="textarea" id="desc" name="desc">
+        </div>
+        <div>
+            <label for="date">Date of Event: </label>
+            <input type="date" id="date" name="date">
+        </div>
+        <div>
+            <label for="startTime">Start Time: </label>
+            <input type="time" id="startTime" name="startTime">
+        </div>
+        <div>
+            <label for="endTime">End Time: </label>
+            <input type="time" id="endTime" name="endTime">
+        </div>
+        <div>
+            <label for="roomSelect">Room: </label>
+            <select id="roomSelect" name="roomSelect">
+            <% rooms.forEach(function(room) { %>
+                <option value="<%= room.ID %>"><%= room.Location %></option>
+            <% }); %>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Request Room Booking</button>
+        </div>
+      </form>
+
+</div>
+
+<script>
+    function toggleShowPassword() {
+        const password = document.getElementById("password");
+        // If password is of type "password", change to text and vice versa.
+		password.type = password.type === "password" ? "text" : "password";
+    }
+</script>
