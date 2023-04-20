@@ -15,6 +15,19 @@ async function insertNewRoom(location) {
     }
 }
 
+// Enter new room data into the database
+async function deleteRoom(id) {
+    try {
+        const query = `DELETE FROM Rooms
+            WHERE \`ID\` = ?;`
+        const params = [id];
+        const resultset = await db.executeQuery(query, params); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
 async function findRoomByID(id) {
     try {
         const query = `SELECT * FROM Rooms WHERE \`ID\` = '${id}'`;
@@ -39,6 +52,7 @@ async function getRooms() {
 
 module.exports = {
     insertNewRoom,
+    deleteRoom,
     getRooms,
     findRoomByID
 }

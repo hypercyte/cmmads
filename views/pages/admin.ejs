@@ -1,46 +1,54 @@
 <html lang="en">
   <%- include("../partials/head.ejs") %>
+  <%- include("../partials/admin-head.ejs") %>
 
   <body>
     <%- include("../partials/datetime.ejs") %>
-    <h1>Admin</h1>
-    <h2>Update Prayer Times</h2>
-    
-    <form action="/shahporan/admin/update-prayer-times" method="POST">
-      <div>
-          <label for="prayerSelect">Prayer Time:</label>
-          <select id="prayerSelect" name="prayerSelect">
-            <option value="fajr">Fajr</option>
-            <option value="fajr_jamaah">Fajr Jama'ah</option>
-            <option value="dhuhr">Dhuhr</option>
-            <option value="dhuhr_jamaah">Dhuhr Jama'ah</option>
-            <option value="asr_1">Asr Mithl 1</option>
-            <option value="asr_2">Asr Mithl 2</option>
-            <option value="asr_jamaah">Asr Jama'ah</option>
-            <option value="maghrib">Maghrib</option>
-            <option value="maghrib_jamaah">Maghrib Jama'ah</option>
-            <option value="isha">Isha</option>
-            <option value="isha_jamaah">Isha Jama'ah</option>
-          </select>
-      </div></br>
-      <div>
-        <label for="newTime">Time:</label>
-        <input type="time" id="newTime" name="newTime">
-      </div></br>
-      <div>
-        <label for="dateFrom">From date</label>
-        <input type="date" id="dateFrom" name="dateFrom">
-      </div></br>
-      <div>
-        <label for="dateTo">To date</label>
-        <input type="date" id="dateTo" name="dateTo">
-      </div></br>
-      <button type="submit">Update</button>
-    </form>
+    <div class="admin-container">
+      <h1>Admin</h1>
+      <div class="content-box">
+        <div class="header">
+          <h1>Update Prayer Times</h1>
+        </div>
+      
+        <div class="content">
+          <form class="admin-form" action="/shahporan/admin/update-prayer-times" method="POST">
+            <div>
+                <label for="prayerSelect">Prayer Time:</label>
+                <select id="prayerSelect" name="prayerSelect">
+                  <option value="fajr">Fajr</option>
+                  <option value="fajr_jamaah">Fajr Jama'ah</option>
+                  <option value="dhuhr">Dhuhr</option>
+                  <option value="dhuhr_jamaah">Dhuhr Jama'ah</option>
+                  <option value="asr_1">Asr Mithl 1</option>
+                  <option value="asr_2">Asr Mithl 2</option>
+                  <option value="asr_jamaah">Asr Jama'ah</option>
+                  <option value="maghrib">Maghrib</option>
+                  <option value="maghrib_jamaah">Maghrib Jama'ah</option>
+                  <option value="isha">Isha</option>
+                  <option value="isha_jamaah">Isha Jama'ah</option>
+                </select>
+            </div></br>
+            <div>
+              <label for="newTime">Time:</label>
+              <input type="time" id="newTime" name="newTime">
+            </div></br>
+            <div>
+              <label for="dateFrom">From date</label>
+              <input type="date" id="dateFrom" name="dateFrom">
+            </div></br>
+            <div>
+              <label for="dateTo">To date</label>
+              <input type="date" id="dateTo" name="dateTo">
+            </div></br>
+            <button type="submit">Update</button>
+          </form>
+        </div>
+      </div>
 
-    <a href="/shahporan/admin/class-management"><button>Manage classes</button></a>
-    <a href="/shahporan/admin/salah-management"><button>Manage prayer times</button></a>
-    <a href="/shahporan/admin/events-management"><button>Manage events</button></a>
-    
+      <!-- <a href="/shahporan/admin/class-management"><button>Manage classes</button></a> 
+      <a href="/shahporan/admin/salah-management"><button>Manage prayer times</button></a>-->
+      <a href="/shahporan/admin/events-management"><button>Manage events</button></a>
+    </div>
   </body>
 </html>

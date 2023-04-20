@@ -231,6 +231,16 @@ app.post('/shahporan/admin/deny-event', async (req, res) => {
     })
 })
 
+// POST route for denying an event
+app.post('/shahporan/admin/delete-room', async (req, res) => {
+    const roomID = req.body.deleteRoomButton;
+
+    roomController.deleteRoom(roomID)
+    .then(() => {
+        res.redirect('/shahporan/admin/events-management');
+    })
+})
+
 // Serve files from public folder
 app.use(express.static('./public'));
 

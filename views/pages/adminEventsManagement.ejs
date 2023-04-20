@@ -1,123 +1,136 @@
 <html lang="en">
   <%- include("../partials/head.ejs") %>
-  <!-- <style>
-    th {
-      color: black;
-    }
-
-    td {
-      color: black;
-    }
-  </style> -->
+  <%- include("../partials/admin-head.ejs") %>
 
   <body>
     <%- include("../partials/datetime.ejs") %>
+    
+    <div class="admin-container">
+      <!-- Add rooms -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Add Room</h1>
+        </div>
+        <div class="content">
+          <form class="admin-form" action="/shahporan/admin/add-room" method="POST">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location">
+            
+            <button type="submit">Add New Room</button>
+          </form>
+        </div>
+      </div>
 
-    <!-- Add rooms -->
-    <div id="addRoom">
-      <h2>Add Room</h2>
-      <form action="/shahporan/admin/add-room" method="POST">
-        <div>
-          <label for="location">Location</label>
-          <input type="text" id="location" name="location">
-        </div></br>
-        <button type="submit">Add New Room</button>
-      </form>
-    </div>
+      <!-- List rooms -->
+      <div class="content-box">
+        <div class="header">
+          <h1>All Rooms</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% rooms.forEach(function(room) { %>
+                <tr>
+                  <td><%= room.ID %></td>
+                  <td><%= room.Location %></td>
+                  <td>
+                    <form action="/shahporan/admin/delete-room" method="POST">
+                      <button class="red" type="submit" value="<%= room.ID %>" name="deleteRoomButton">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table> 
+        </div>    
+      </div>
 
-    <!-- List rooms -->
-    <div id="listRooms">
-      <h2>Rooms</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Location</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% rooms.forEach(function(room) { %>
-            <tr>
-              <td><%= room.ID %></td>
-              <td><%= room.Location %></td>
-              <td><button value="<%= room.ID %>" onclick="console.log(this.value)">Delete</button></td>
-            </tr>
-          <% }); %>
-        </tbody>
-      </table>      
-    </div>
+      <!-- Events awaiting approval -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Events Awaiting Approval</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% eventsWaiting.forEach(function(event) { %>
+              <tr>
+                <td><%= event.ID %></td>
+                <td><%= event.Title %></td>
+                <td><%= event.Description %></td>
+                <td><%= event.Date.toLocaleDateString() %></td>
+                <td><%= event.Approved ? 'Approved' : 'Awaiting approval' %></td>
+                <td>
+                  <form action="/shahporan/admin/approve-event" method="POST">
+                    <button class="green" type="submit" value="<%= event.ID %>" name="approveButton">Approve</button>
+                  </form>
+                </td>
+                <td>
+                  <form action="/shahporan/admin/deny-event" method="POST">
+                    <button class="red" type="submit" value="<%= event.ID %>" name="denyButton">Deny</button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table> 
+        </div>
+      </div>
 
-    <!-- Events awaiting approval -->
-    <div>
-      <h2>Events awaiting approval</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Approve</th>
-            <th>Deny</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% eventsWaiting.forEach(function(event) { %>
-          <tr>
-            <td><%= event.ID %></td>
-            <td><%= event.Title %></td>
-            <td><%= event.Description %></td>
-            <td><%= event.Date.toLocaleDateString() %></td>
-            <td><%= event.Approved ? 'Approved' : 'Awaiting approval' %></td>
-            <td>
-              <form action="/shahporan/admin/approve-event" method="POST">
-                <button type="submit" value="<%= event.ID %>" name="approveButton">Approve</button>
-              </form>
-            </td>
-            <td>
-              <form action="/shahporan/admin/deny-event" method="POST">
-                <button type="submit" value="<%= event.ID %>" name="denyButton">Deny</button>
-              </form>
-            </td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>  
-    </div>
-
-    <!-- Display all events -->
-    <div>
-      <h2>All approved events</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Cancel</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% eventsApproved.forEach(function(event) { %>
-          <tr>
-            <td><%= event.ID %></td>
-            <td><%= event.Title %></td>
-            <td><%= event.Description %></td>
-            <td><%= event.Date.toLocaleDateString() %></td>
-            <td><%= event.Approved ? 'Approved' : 'Awaiting approval' %></td>
-            <td>
-              <form action="/shahporan/admin/deny-event" method="POST">
-                <button type="submit" value="<%= event.ID %>" name="denyButton">Cancel</button>
-              </form>
-            </td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>  
+      <!-- Display all events -->
+      <div class="content-box">
+        <div class="header">
+          <h1>All Events</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% eventsApproved.forEach(function(event) { %>
+              <tr>
+                <td><%= event.ID %></td>
+                <td><%= event.Title %></td>
+                <td><%= event.Description %></td>
+                <td><%= event.Date.toLocaleDateString() %></td>
+                <td><%= event.Approved ? 'Approved' : 'Awaiting approval' %></td>
+                <td>
+                  <form action="/shahporan/admin/deny-event" method="POST">
+                    <button class="red" type="submit" value="<%= event.ID %>" name="denyButton">Cancel</button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table> 
+        </div> 
+      </div>
     </div>
   </body>
 
