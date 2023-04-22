@@ -128,3 +128,7 @@ button.green {
 button.green:hover {
     background:rgb(50, 121, 61);
 }
+
+header {
+    position: relative;
+}
