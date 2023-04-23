@@ -1,0 +1,134 @@
+<html lang="en">
+  <%- include("../partials/head.ejs") %> <%-
+  include("../partials/admin-head.ejs") %>
+
+  <body>
+    <%- include("../partials/datetime.ejs") %>
+
+    <div class="admin-container">
+      <!-- Active User list -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Active Users</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach(function(user) { %>
+              <tr>
+                <td><%= user.ID %></td>
+                <td><%= user.name %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.isAdmin ? 'Yes' : '' %></td>
+                <td>
+                  <form action="/shahporan/admin/deactivate-user" method="POST">
+                    <button
+                      id="deactivate<%= user.ID %>"
+                      type="submit"
+                      value="<%= user.ID %>"
+                      name="deactivate-button"
+                    >
+                      Deactivate
+                    </button>
+                  </form>
+                </td>
+                <td>
+                  <form action="/shahporan/admin/delete-user" method="POST">
+                    <button
+                      id="delete<%= user.ID %>"
+                      class="red"
+                      type="submit"
+                      value="<%= user.ID %>"
+                      name="delete-button"
+                      <% if (user.ID == 1) { %>
+                      disabled
+                      <% } %>
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Inactive User list -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Inactive Users</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% inactiveUsers.forEach(function(user) { %>
+              <tr>
+                <td><%= user.ID %></td>
+                <td><%= user.name %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.isAdmin ? 'Yes' : '' %></td>
+                <td>
+                  <form action="/shahporan/admin/activate-user" method="POST">
+                    <button
+                      type="submit"
+                      value="<%= user.ID %>"
+                      name="activate-button"
+                    >
+                      Activate
+                    </button>
+                  </form>
+                </td>
+                <td>
+                  <form action="/shahporan/admin/delete-user" method="POST">
+                    <button
+                      class="red"
+                      type="submit"
+                      value="<%= user.ID %>"
+                      name="delete-button"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const rootDeleteButton = document.getElementById('delete1');
+    const rootDeactivateButton = document.getElementById('deactivate1');
+    rootDeleteButton.disabled = true;
+    rootDeactivateButton.disabled = true;
+  </script>
+</html>

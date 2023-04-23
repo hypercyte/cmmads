@@ -1,17 +1,16 @@
 <html lang="en">
-<%- include("../partials/head.ejs") %>
+  <%- include("../partials/head.ejs") %>
+  <%-include("../partials/admin-head.ejs") %>
 
-<body>
-  <%- include("../partials/datetime.ejs") %>
+  <body>
+    <%- include("../partials/datetime.ejs") %>
 
-  <div class="home">
-    <h2>Home
-    </h2>   
-    <a href="/shahporan/display"><button>Display mode</button></a>
-    <a href="/shahporan/admin"><button>Admin</button></a>
-    <a href="/shahporan/login"><button>Log In</button></a>
-    <a href="/shahporan/register"><button>Register</button></a>
-  </div>
-
-</body>
+    <div class="admin-container">
+      <h2>Home</h2>
+      <a href="/shahporan/display"><button>Display mode</button></a>
+      <a href="/shahporan/admin"><button>Admin</button></a>
+      <a href="/shahporan/login"><button>Log In</button></a>
+      <a href="/shahporan/register"><button>Register</button></a>
+    </div>
+  </body>
 </html>

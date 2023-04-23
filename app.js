@@ -95,6 +95,28 @@ app.get('/shahporan/admin', async (req, res) => {
     res.render('pages/admin.ejs');
 })
 
+// Route for admin - user management
+app.get('/shahporan/admin/user-management', async (req, res) => {
+    const notAuth = await req.isUnauthenticated();
+    const user = await req.user;
+    if (notAuth) {
+        res.redirect('/shahporan/login');
+        return;
+    } else if (user[0]['isAdmin'] == 0) {
+        res.redirect('/shahporan/events-booking');
+        return;
+    }
+    const users = authController.getActiveUsers();
+    const inactiveUsers = authController.getInactiveUsers();
+    Promise.all([users, inactiveUsers])
+    .then(([usersOut, inactiveOut]) => { 
+        res.render('pages/adminUserManagement.ejs', {
+            users: usersOut,
+            inactiveUsers: inactiveOut
+        });
+    })
+});
+
 // Route for admin - events management
 app.get('/shahporan/admin/events-management', async (req, res) => {
     const notAuth = await req.isUnauthenticated();
@@ -120,7 +142,7 @@ app.get('/shahporan/admin/events-management', async (req, res) => {
 });
 
 
-// Route for admin - events management
+// Route for admin - announcement management
 app.get('/shahporan/admin/announcement-management', async (req, res) => {
     const notAuth = await req.isUnauthenticated();
     const user = await req.user;
@@ -148,6 +170,9 @@ app.get('/shahporan/events-booking', async (req, res) => {
         res.redirect('/shahporan/login');
         return;
     }
+    else if (user[0]['active'] == 0) {
+        res.redirect('/shahporan/inactive');
+    }
     const rooms = roomController.getRooms();
     const events = eventsController.findEventsByUserID(user[0]['ID']);
     Promise.all([rooms, events])
@@ -164,6 +189,11 @@ app.get('/shahporan/login', (req, res) => {
 // Route for register
 app.get('/shahporan/register', (req, res) => {
     res.render('pages/register.ejs');
+})
+
+// Route for inactive user
+app.get('/shahporan/inactive', (req, res) => {
+    res.render('pages/inactiveAccount.ejs');
 })
 
 /*=================

@@ -129,6 +129,11 @@ button.green:hover {
     background:rgb(50, 121, 61);
 }
 
+button:disabled {
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
 header {
     position: relative;
 }
