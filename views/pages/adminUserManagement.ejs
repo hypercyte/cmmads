@@ -42,6 +42,7 @@
                         name="unadminButton"
                         <% if (user.ID == 1) { %>
                           disabled
+                          title="Cannot remove admin from root user."
                         <% } %>
                       >
                         Remove Admin
@@ -68,6 +69,10 @@
                       type="submit"
                       value="<%= user.ID %>"
                       name="deactivateButton"
+                      <% if (user.ID == 1) { %>
+                        disabled
+                        title="Cannot deactivate root user."
+                      <% } %>
                     >
                       Deactivate
                     </button>
@@ -137,11 +142,4 @@
       </div>
     </div>
   </body>
-
-  <script>
-    const rootDeleteButton = document.getElementById('delete1');
-    const rootDeactivateButton = document.getElementById('deactivate1');
-    rootDeleteButton.disabled = true;
-    rootDeactivateButton.disabled = true;
-  </script>
 </html>
