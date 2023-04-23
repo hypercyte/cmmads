@@ -292,6 +292,56 @@ app.post('/shahporan/admin/delete-room', async (req, res) => {
     })
 })
 
+// POST route for making user an admin
+app.post('/shahporan/admin/make-admin', async (req, res) => {
+    const userID = req.body.adminButton;
+
+    authController.makeAdmin(userID)
+    .then(() => {
+        res.redirect('/shahporan/admin/user-management');
+    })
+})
+
+// POST route for making user an admin
+app.post('/shahporan/admin/remove-admin', async (req, res) => {
+    const userID = req.body.unadminButton;
+
+    authController.removeAdmin(userID)
+    .then(() => {
+        res.redirect('/shahporan/admin/user-management');
+    })
+})
+
+// POST route for activating a user
+app.post('/shahporan/admin/activate-user', async (req, res) => {
+    const userID = req.body.activateButton;
+
+    authController.activateUser(userID)
+    .then(() => {
+        res.redirect('/shahporan/admin/user-management');
+    })
+})
+
+// POST route for deactivating a user
+app.post('/shahporan/admin/deactivate-user', async (req, res) => {
+    const userID = req.body.deactivateButton;
+
+    authController.deactivateUser(userID)
+    .then(() => {
+        res.redirect('/shahporan/admin/user-management');
+    })
+})
+
+// POST route for deleting a user
+app.post('/shahporan/admin/delete-user', async (req, res) => {
+    const userID = req.body.deleteButton;
+
+    authController.deleteUser(userID)
+    .then(() => {
+        res.redirect('/shahporan/admin/user-management');
+    })
+})
+
 // Serve files from public folder
 app.use(express.static('./public'));
 

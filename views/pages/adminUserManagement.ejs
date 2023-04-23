@@ -33,30 +33,43 @@
                 <td><%= user.email %></td>
                 <td><%= user.isAdmin ? 'Yes' : '' %></td>
                 <td>
+                  <% if (user.isAdmin) { %>
+                    <form action="/shahporan/admin/remove-admin" method="POST">
+                      <button
+                        class="red"
+                        type="submit"
+                        value="<%= user.ID %>"
+                        name="unadminButton"
+                        <% if (user.ID == 1) { %>
+                          disabled
+                        <% } %>
+                      >
+                        Remove Admin
+                      </button>
+                    </form>
+                  <% } else { %>
+                    <form action="/shahporan/admin/make-admin" method="POST">
+                      <button
+                        class="amber"
+                        type="submit"
+                        value="<%= user.ID %>"
+                        name="adminButton"
+                      >
+                        Make Admin
+                      </button>
+                    </form>
+                  <% } %>
+                </td>
+                <td>
                   <form action="/shahporan/admin/deactivate-user" method="POST">
                     <button
+                      class="red"
                       id="deactivate<%= user.ID %>"
                       type="submit"
                       value="<%= user.ID %>"
-                      name="deactivate-button"
+                      name="deactivateButton"
                     >
                       Deactivate
-                    </button>
-                  </form>
-                </td>
-                <td>
-                  <form action="/shahporan/admin/delete-user" method="POST">
-                    <button
-                      id="delete<%= user.ID %>"
-                      class="red"
-                      type="submit"
-                      value="<%= user.ID %>"
-                      name="delete-button"
-                      <% if (user.ID == 1) { %>
-                      disabled
-                      <% } %>
-                    >
-                      Delete
                     </button>
                   </form>
                 </td>
@@ -98,7 +111,7 @@
                     <button
                       type="submit"
                       value="<%= user.ID %>"
-                      name="activate-button"
+                      name="activateButton"
                     >
                       Activate
                     </button>
@@ -110,7 +123,7 @@
                       class="red"
                       type="submit"
                       value="<%= user.ID %>"
-                      name="delete-button"
+                      name="deleteButton"
                     >
                       Delete
                     </button>

@@ -71,10 +71,71 @@ async function getInactiveUsers() {
     }
 }
 
+// Make user admin
+async function makeAdmin(id) {
+    try {
+        const query = `UPDATE users SET \`isAdmin\` = 1 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Remove admin from user
+async function removeAdmin(id) {
+    try {
+        const query = `UPDATE users SET \`isAdmin\` = 0 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Activate user
+async function activateUser(id) {
+    try {
+        const query = `UPDATE users SET \`active\` = 1 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Deactivate user
+async function deactivateUser(id) {
+    try {
+        const query = `UPDATE users SET \`active\` = 0 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Delete user
+async function deleteUser(id) {
+    try {
+        const query = `DELETE FROM users WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+
 module.exports = {
     insertNewUser,
     findUser,
     findUserByID,
     getActiveUsers,
-    getInactiveUsers
+    getInactiveUsers,
+    makeAdmin,
+    removeAdmin,
+    activateUser,
+    deactivateUser,
+    deleteUser
 }

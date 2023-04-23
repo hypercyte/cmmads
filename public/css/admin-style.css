@@ -129,6 +129,14 @@ button.green:hover {
     background:rgb(50, 121, 61);
 }
 
+button.amber {
+    background:rgb(199, 162, 81);
+}
+
+button.amber:hover {
+    background:rgb(138, 105, 57);
+}
+
 button:disabled {
     opacity: 50%;
     cursor: not-allowed;

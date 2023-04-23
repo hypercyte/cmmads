@@ -21,10 +21,41 @@ async function getInactiveUsers() {
     return await model.getInactiveUsers();
 }
 
+// Make user admin
+async function makeAdmin(id) {
+    return await model.makeAdmin(id);
+}
+
+// Enter new user data into the database
+async function removeAdmin(id) {
+    return await model.removeAdmin(id);
+}
+
+// Activate user
+async function activateUser(id) {
+    return await model.activateUser(id);
+}
+
+// Deactivate user
+async function deactivateUser(id) {
+    return await model.deactivateUser(id);
+}
+
+// Delete user
+async function deleteUser(id) {
+    return await model.deleteUser(id);
+}
+
+
 module.exports = {
     insertNewUser,
     findUser,
     findUserByID,
     getActiveUsers,
-    getInactiveUsers
+    getInactiveUsers,
+    makeAdmin,
+    removeAdmin,
+    activateUser,
+    deactivateUser,
+    deleteUser
 }
