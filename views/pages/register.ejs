@@ -1,76 +1,42 @@
 <html lang="en">
 <%- include("../partials/head.ejs") %>
+<%- include("../partials/admin-head.ejs") %>
 <%- include("../partials/datetime.ejs") %>
 
-<style>
-    /* Center */
-    .flex-center {
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(100vh - 75px);
-        flex-direction: column;
-    }
+<div class="admin-container">  
 
-    /* Add a bit of space under the button */
-    button {
-        margin-bottom: 5px;
-    }
-
-    /* Text fields styling */
-    input {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.5;
-        background-color: #f2f2f2;
-        border: none;
-        border-radius: 4px;
-        color: #000;
-        margin-bottom: 10px;
-    }
-
-    /* Text field placeholder styling */
-    input::placeholder {
-        color: #a9a9a9;
-    }
-
-    /* Text field focus styling */
-    input:focus {
-        outline: none;
-        background-color: #e6e6e6;
-    }
-</style>
-<div class="flex-center">  
-
-<h1>Register Account</h1>
-<form action="/shahporan/register" method="POST" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-    <div>
-        <input type="text" id="name" name="name" placeholder="Full Name" required>
+    <div class="content-box">
+        <div class="header">
+            <h1>Register Account</h1>
+        </div>
+        <div class="content">
+            <form class="admin-form" action="/shahporan/register" method="POST" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <div>
+                    <input type="text" id="name" name="name" placeholder="Full Name" required>
+                </div>
+                <div>
+                    <input type="text" id="email" name="email" placeholder="E-mail address" required>
+                </div>
+                <div>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                </div>
+                <div>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <div>
+                    <label style="font-size: small; display:flex;" >
+                        <input type="checkbox" onclick="toggleShowPassword()"> Show Password
+                    </label>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button type="submit">Submit registration</button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <a style="font-size: small" >Already have an account? </a><a style="font-size: small" href="login">Log in</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <input type="text" id="email" name="email" placeholder="E-mail address" required>
-    </div>
-    <div>
-        <input type="text" id="username" name="username" placeholder="Username" required>
-    </div>
-    <div>
-        <input type="password" id="password" name="password" placeholder="Password" required>
-    </div>
-    <div>
-        <label style="font-size: small; display:flex;" >
-            <input type="checkbox" onclick="toggleShowPassword()"> Show Password
-        </label>
-    </div>
-    <div style="margin-top: 20px;">
-        <button type="submit">Submit registration</button>
-    </div>
-    <div style="margin-top: 20px;">
-        <a style="font-size: small" >Already have an account? </a><a style="font-size: small" href="login">Log in</a>
-    </div>
-</form>
 </div>
 
 <script>

@@ -6,7 +6,6 @@ const getAnnouncements = async () => {
     const resultset = await db.executeQuery(query);
 
     console.log("Just retrived announcements.")
-    // console.log(resultset)
 
     return resultset;
 }

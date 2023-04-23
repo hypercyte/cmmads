@@ -132,3 +132,45 @@ button.green:hover {
 header {
     position: relative;
 }
+
+.admin-edit {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .3);
+    backdrop-filter: blur(3px);
+}
+
+.admin-edit-box {
+    width: 400px;
+    background: #EEE;
+}
+
+.admin-edit-box .header {
+    display: flex;
+    justify-content: space-between;
+    background: #234d75;
+}
+
+.admin-edit-box .header h1 {
+    margin: 0;
+    padding: 5px 10px;
+    color: #EEE;
+    font-size: 1.75rem;
+}
+
+.admin-edit-box .header #admin-edit-close {
+    width: 45px;
+    font-weight: 700;
+}
+
+.admin-edit-box .content {
+    padding: 10px 0 10px 10px;
+}

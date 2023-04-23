@@ -6,51 +6,6 @@
     <%- include("../partials/datetime.ejs") %>
     
     <div class="admin-container">
-      <!-- Add rooms -->
-      <div class="content-box">
-        <div class="header">
-          <h1>Add Room</h1>
-        </div>
-        <div class="content">
-          <form class="admin-form" action="/shahporan/admin/add-room" method="POST">
-            <label for="location">Location</label>
-            <input type="text" id="location" name="location">
-            
-            <button type="submit">Add New Room</button>
-          </form>
-        </div>
-      </div>
-
-      <!-- List rooms -->
-      <div class="content-box">
-        <div class="header">
-          <h1>All Rooms</h1>
-        </div>
-        <div class="content">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Location</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% rooms.forEach(function(room) { %>
-                <tr>
-                  <td><%= room.ID %></td>
-                  <td><%= room.Location %></td>
-                  <td>
-                    <form action="/shahporan/admin/delete-room" method="POST">
-                      <button class="red" type="submit" value="<%= room.ID %>" name="deleteRoomButton">Delete</button>
-                    </form>
-                  </td>
-                </tr>
-              <% }); %>
-            </tbody>
-          </table> 
-        </div>    
-      </div>
 
       <!-- Events awaiting approval -->
       <div class="content-box">
@@ -131,6 +86,53 @@
           </table> 
         </div> 
       </div>
+
+      <!-- Add rooms -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Add Room</h1>
+        </div>
+        <div class="content">
+          <form class="admin-form" action="/shahporan/admin/add-room" method="POST">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location">
+            
+            <button type="submit">Add New Room</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- List rooms -->
+      <div class="content-box">
+        <div class="header">
+          <h1>All Rooms</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% rooms.forEach(function(room) { %>
+                <tr>
+                  <td><%= room.ID %></td>
+                  <td><%= room.Location %></td>
+                  <td>
+                    <form action="/shahporan/admin/delete-room" method="POST">
+                      <button class="red" type="submit" value="<%= room.ID %>" name="deleteRoomButton">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table> 
+        </div>    
+      </div>
+
     </div>
   </body>
 

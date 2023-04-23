@@ -119,6 +119,27 @@ app.get('/shahporan/admin/events-management', async (req, res) => {
     })
 });
 
+
+// Route for admin - events management
+app.get('/shahporan/admin/announcement-management', async (req, res) => {
+    const notAuth = await req.isUnauthenticated();
+    const user = await req.user;
+    if (notAuth) {
+        res.redirect('/shahporan/login');
+        return;
+    } else if (user[0]['isAdmin'] == 0) {
+        res.redirect('/shahporan/events-booking');
+        return;
+    }
+    const announcements = announcementController.getAnnouncements();
+    Promise.all([announcements])
+    .then(([announceOut]) => {
+        res.render('pages/adminAnnouncementManagement.ejs', {
+            announcements: announceOut
+        });
+    })
+});
+
 // Route for room booking/event booking
 app.get('/shahporan/events-booking', async (req, res) => {
     const notAuth = await req.isUnauthenticated();
