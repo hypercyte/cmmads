@@ -1,0 +1,145 @@
+<html lang="en">
+  <%- include("../partials/head.ejs") %> <%-
+  include("../partials/admin-head.ejs") %>
+
+  <body>
+    <%- include("../partials/datetime.ejs") %>
+
+    <div class="admin-container">
+      <!-- Active User list -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Active Users</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach(function(user) { %>
+              <tr>
+                <td><%= user.ID %></td>
+                <td><%= user.name %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.isAdmin ? 'Yes' : '' %></td>
+                <td>
+                  <% if (user.isAdmin) { %>
+                    <form action="/shahporan/admin/remove-admin" method="POST">
+                      <button
+                        class="red"
+                        type="submit"
+                        value="<%= user.ID %>"
+                        name="unadminButton"
+                        <% if (user.ID == 1) { %>
+                          disabled
+                          title="Cannot remove admin from root user."
+                        <% } %>
+                      >
+                        Remove Admin
+                      </button>
+                    </form>
+                  <% } else { %>
+                    <form action="/shahporan/admin/make-admin" method="POST">
+                      <button
+                        class="amber"
+                        type="submit"
+                        value="<%= user.ID %>"
+                        name="adminButton"
+                      >
+                        Make Admin
+                      </button>
+                    </form>
+                  <% } %>
+                </td>
+                <td>
+                  <form action="/shahporan/admin/deactivate-user" method="POST">
+                    <button
+                      class="red"
+                      id="deactivate<%= user.ID %>"
+                      type="submit"
+                      value="<%= user.ID %>"
+                      name="deactivateButton"
+                      <% if (user.ID == 1) { %>
+                        disabled
+                        title="Cannot deactivate root user."
+                      <% } %>
+                    >
+                      Deactivate
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Inactive User list -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Inactive Users</h1>
+        </div>
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% inactiveUsers.forEach(function(user) { %>
+              <tr>
+                <td><%= user.ID %></td>
+                <td><%= user.name %></td>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.isAdmin ? 'Yes' : '' %></td>
+                <td>
+                  <form action="/shahporan/admin/activate-user" method="POST">
+                    <button
+                      type="submit"
+                      value="<%= user.ID %>"
+                      name="activateButton"
+                    >
+                      Activate
+                    </button>
+                  </form>
+                </td>
+                <td>
+                  <form action="/shahporan/admin/delete-user" method="POST">
+                    <button
+                      class="red"
+                      type="submit"
+                      value="<%= user.ID %>"
+                      name="deleteButton"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

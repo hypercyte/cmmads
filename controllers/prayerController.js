@@ -28,6 +28,11 @@ function createPrayerTimesTable(alreadyExists) {
     model.importedPrayerTimes();
 }
 
+function updatePrayerTimes(p,t,df,dt) {
+    model.updatePrayerTimes(p,t,df,dt);
+}
+
 module.exports = {
-    getPrayerTimes
+    getPrayerTimes,
+    updatePrayerTimes
 }

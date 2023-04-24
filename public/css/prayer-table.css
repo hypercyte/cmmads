@@ -1,0 +1,25 @@
+
+table {
+    width: 100%;
+    height: 100%;
+    padding-right: 20px;
+}
+
+th, td {
+    text-align: left;
+    font-size: 42px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+}
+
+td sub {
+    font-weight: 100;
+    font-size:21px;
+}
+
+th {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}

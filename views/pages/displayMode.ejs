@@ -1,5 +1,9 @@
 <html lang="en">
   <%- include("../partials/head.ejs") %>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/prayer-table.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="../../public/css/prayer-table.css" /> -->
+  </head>
 
   <body>
     <%- include("../partials/datetime.ejs") %>
@@ -98,8 +102,13 @@
           }, 10000);
         </script>
 
-        <p class="announcements" id="announceTitle"></p>
-        <p class="announcements" id="announceContent"></p>
+        <div class="announcement-header">
+          <p class="announcements" id="announceTitle"></p>
+        </div>
+
+        <div class="announcement-content">
+          <p class="announcements" id="announceContent"></p>
+        </div>
       </div>
     </div>
   </body>

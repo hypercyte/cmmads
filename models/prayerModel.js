@@ -156,10 +156,24 @@ async function createPrayerTable() {
     }
 }
 
+async function updatePrayerTimes(selectedPrayer, newTime, dateFrom, dateTo) {
+    try {
+        console.log(selectedPrayer,newTime,dateFrom,dateTo);
+        const query = `update prayer_times_${currentYear} set \`${selectedPrayer}\` = '${newTime}' where \`DATE\` between ? and ?;`;
+        const params = [dateFrom, dateTo]; 
+        const resultset = await db.executeQuery(query, params); // execute query
+        console.log("updated prayer times:");
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     checkForPrayerTimes,
     createPrayerTable,
     formatDate,
     importedPrayerTimes,
-    getPrayerTimes
+    getPrayerTimes,
+    updatePrayerTimes
 };
