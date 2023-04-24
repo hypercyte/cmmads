@@ -38,7 +38,7 @@ bot.onText(/\/stop/, (msg) => {
 });
 
 function sendPrayerTimes(id, prayers) {
-    const today = new Date().toLocaleDateString();
+    const today = new Date().toISOString().slice(0, 10);
     bot.sendMessage(id, `<b>${today}</b>\n\n` +
     `<u>Salah start times:</u>\n` +
     `Fajr: ${prayers[0]['fajr'].slice(0,5)}am\n` +
