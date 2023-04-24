@@ -38,9 +38,7 @@ bot.onText(/\/stop/, (msg) => {
 });
 
 function sendPrayerTimes(id, prayers) {
-    const today = new Date().toISOString().slice(0, 10);
-    console.log(today);
-    bot.sendMessage(id, `<b>${today}</b>\n\n` +
+    bot.sendMessage(id, `<b>${getTodaysDate()}</b>\n\n` +
     `<u>Salah start times:</u>\n` +
     `Fajr: ${prayers[0]['fajr'].slice(0,5)}am\n` +
     `Dhuhr: ${prayers[0]['dhuhr'].slice(0,5)}pm\n` +
@@ -55,6 +53,17 @@ function sendPrayerTimes(id, prayers) {
     `Maghrib Jama'ah: ${prayers[0]['maghrib_jamaah'].slice(0,5)}pm\n` +
     `Isha' Jama'ah: ${prayers[0]['isha_jamaah'].slice(0,5)}pm\n\n`,
     {parse_mode: "HTML"})
+}
+
+function getTodaysDate() {
+    const today = new Date();
+    const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    const days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ];
+    const day = today.getDay();
+    const date = today.getDate();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+    return `${days[day]}, ${date} ${months[month]} ${year}`
 }
 
 async function subscribe(id) {
