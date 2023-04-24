@@ -204,7 +204,7 @@ POST ROUTING
 
 // POST route for login
 app.post('/shahporan/login', passport.authenticate('local', {
-    successRedirect: '/shahporan/events-booking',
+    successRedirect: '/shahporan/',
     failureRedirect: '/shahporan/login',
     failureFlash: true
 }))

@@ -6,11 +6,16 @@
     <%- include("../partials/datetime.ejs") %>
 
     <div class="admin-container">
-      <h2>Home</h2>
-      <a href="/shahporan/display"><button>Display mode</button></a>
-      <a href="/shahporan/admin"><button>Admin</button></a>
-      <a href="/shahporan/login"><button>Log In</button></a>
-      <a href="/shahporan/register"><button>Register</button></a>
+      <div class="content-box">
+        <div class="header">
+          <h2>Home</h2>
+        </div>
+        <div class="content">
+          <a href="/shahporan/display"><button>Display mode</button></a>
+          <a href="/shahporan/events-booking"><button>Book an event</button></a>
+          <a href="/shahporan/admin"><button class="amber">Admin</button></a>
+        </div>
+      </div>
     </div>
   </body>
 </html>

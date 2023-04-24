@@ -1,10 +1,12 @@
 <html lang="en">
-  <%- include("../partials/head.ejs") %>
-  <%- include("../partials/admin-head.ejs") %>
-
+  <head>
+    <%- include("../partials/head.ejs") %> <%-
+    include("../partials/admin-head.ejs") %>
+    <title>Announcement Management</title>
+  </head>
   <body>
     <%- include("../partials/datetime.ejs") %>
-    
+
     <div class="admin-container">
       <!-- Announcement list -->
       <div class="content-box">
@@ -29,53 +31,68 @@
                 <td><%= announcement.Title %></td>
                 <td><%= announcement.Content %></td>
                 <td>
-                    <button value="<%= announcement.ID %>" name="edit">Edit</button>
+                  <button value="<%= announcement.ID %>" name="edit">
+                    Edit
+                  </button>
                 </td>
                 <td>
-                  <form action="/shahporan/admin/delete-announcement" method="POST">
-                    <button class="red" type="submit" value="<%= announcement.ID %>" name="denyButton">Delete</button>
+                  <form
+                    action="/shahporan/admin/delete-announcement"
+                    method="POST"
+                  >
+                    <button
+                      class="red"
+                      type="submit"
+                      value="<%= announcement.ID %>"
+                      name="denyButton"
+                    >
+                      Delete
+                    </button>
                   </form>
                 </td>
               </tr>
               <% }); %>
             </tbody>
-          </table> 
+          </table>
         </div>
       </div>
-      
-      <div id="admin-edit-background-blur">
-        &nbsp;
-      </div>
+
+      <div id="admin-edit-background-blur">&nbsp;</div>
 
       <div class="admin-edit">
         <div class="admin-edit-box">
-            <div class="header">
-                <h1>Edit</h1>
-                <button class="red" id="admin-edit-close">X</button>
-            </div>
+          <div class="header">
+            <h1>Edit</h1>
+            <button class="red" id="admin-edit-close">X</button>
+          </div>
 
-            <div class="content">
-                <form class="admin-form">
-                    <input id="announcement-id" type="hidden">
+          <div class="content">
+            <form class="admin-form">
+              <input id="announcement-id" type="hidden" />
 
-                    <label>Title</label>
-                    <input id="announcement-title" type="text" name="new_title">
-                    <label>Text</label>
-                    <input id="announcement-content" type="text" name="new-content" value="">
+              <label>Title</label>
+              <input id="announcement-title" type="text" name="new_title" />
+              <label>Text</label>
+              <input
+                id="announcement-content"
+                type="text"
+                name="new-content"
+                value=""
+              />
 
-                    <button type="submit">Edit</button>
-                </form>
-            </div>
+              <button type="submit">Edit</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
 
     <script>
-        const backgroundBlur = document.getElementById("admin-edit-background-blur")
+      const backgroundBlur = document.getElementById(
+        "admin-edit-background-blur"
+      );
 
-        backgroundBlur.addEventListener("click", () => {
-
-        })
+      backgroundBlur.addEventListener("click", () => {});
     </script>
   </body>
 </html>

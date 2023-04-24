@@ -1,6 +1,10 @@
 <html lang="en">
-  <%- include("../partials/head.ejs") %>
-  <%- include("../partials/admin-head.ejs") %>
+  <head>
+    <%- include("../partials/head.ejs") %>
+    <%- include("../partials/admin-head.ejs") %>
+    
+    <title>Shahporan Admin</title>
+  </head>
 
   <body>
     <%- include("../partials/datetime.ejs") %>
@@ -48,8 +52,10 @@
 
       <!-- <a href="/shahporan/admin/class-management"><button>Manage classes</button></a> 
       <a href="/shahporan/admin/salah-management"><button>Manage prayer times</button></a>-->
+      <a href="/shahporan/"><button class="amber">Home</button></a>
       <a href="/shahporan/admin/events-management"><button>Manage events</button></a>
       <a href="/shahporan/admin/announcement-management"><button>Manage announcements</button></a>
+      <a href="/shahporan/admin/user-management"><button>Manage users</button></a>
     </div>
   </body>
 </html>

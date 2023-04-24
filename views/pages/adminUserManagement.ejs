@@ -1,6 +1,9 @@
 <html lang="en">
-  <%- include("../partials/head.ejs") %> <%-
-  include("../partials/admin-head.ejs") %>
+  <head>
+    <%- include("../partials/head.ejs") %> <%-
+    include("../partials/admin-head.ejs") %>
+    <title>User Management</title>
+  </head>
 
   <body>
     <%- include("../partials/datetime.ejs") %>
@@ -140,6 +143,9 @@
           </table>
         </div>
       </div>
+      <a href="/shahporan/admin">
+        <button>Back</button>
+      </a>
     </div>
   </body>
 </html>
