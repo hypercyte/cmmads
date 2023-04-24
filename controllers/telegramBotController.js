@@ -18,14 +18,14 @@ bot.onText(/\/start/, (msg) => {
     })
 });
 
-// 0th minute, 1st Hour, *Every day, *Every month, *Every day of week.
-cron.schedule('0 1 * * *', () => {
+// 5th minute, 0th Hour, *Every day, *Every month, *Every day of week.
+cron.schedule('5 0 * * *', () => {
     prayerController.getPrayerTimes()
     .then(prayers => {
         getSubscribers()
         .then((subscribers) => {
             subscribers.forEach(subscriber => {
-                sendPrayerTimes(subscriber, prayers);
+                sendPrayerTimes(subscriber.ChatID, prayers);
             })
         })
     })
@@ -37,9 +37,10 @@ bot.onText(/\/stop/, (msg) => {
     bot.sendMessage(id, "You will no longer receive salah time updates.");
 });
 
-function sendPrayerTimes(subscriber, prayers) {
+function sendPrayerTimes(id, prayers) {
     const today = new Date().toLocaleDateString();
-    bot.sendMessage(subscriber.ChatID, `<u>Salah start times:</u>\n` +
+    bot.sendMessage(id, `<b>${today}</b>\n\n` +
+    `<u>Salah start times:</u>\n` +
     `Fajr: ${prayers[0]['fajr'].slice(0,5)}am\n` +
     `Dhuhr: ${prayers[0]['dhuhr'].slice(0,5)}pm\n` +
     `'Asr (1st Mithl): ${prayers[0]['asr_1'].slice(0,5)}pm\n` +
