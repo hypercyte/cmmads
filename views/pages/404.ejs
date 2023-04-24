@@ -1,17 +1,25 @@
 <html lang="en">
-    <%- include("../partials/head.ejs") %>
-    <%- include("../partials/admin-head.ejs") %>
-    
-    <body>
-      <%- include("../partials/datetime.ejs") %>
-    
-      <div class="admin-container">
-        <h2>Oops, looks like you're lost! Did you mean one of these?
-        </h2>   
-        <a href="/shahporan/display"><button>Display mode</button></a>
-        <a href="/shahporan/admin"><button>Admin</button></a>
-        <a href="/shahporan/login"><button>Log In</button></a>
-        <a href="/shahporan/register"><button>Register</button></a>
+  <head>
+    <%- include("../partials/head.ejs") %> <%-
+    include("../partials/admin-head.ejs") %>
+    <title>404: Page not found</title>
+  </head>
+  <body>
+    <%- include("../partials/datetime.ejs") %>
+
+    <div class="admin-container">
+      <div class="content-box">
+        <div class="header">
+          <h2>Oops! Looks like you're lost. Did you mean one of these?</h2>
+        </div>
+        <div class="content">
+          <a href="/shahporan/display"><button>Display mode</button></a>
+          <a href="/shahporan/admin"><button>Admin</button></a>
+          <a href="/shahporan/events-booking"><button>Book an event</button></a>
+          <a href="/shahporan/login"><button>Log In</button></a>
+          <a href="/shahporan/register"><button>Register</button></a>
+        </div>
+      </div>
     </div>
-    
+  </body>
 </html>

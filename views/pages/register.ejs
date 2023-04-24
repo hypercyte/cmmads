@@ -1,48 +1,94 @@
 <html lang="en">
-<%- include("../partials/head.ejs") %>
-<%- include("../partials/admin-head.ejs") %>
-<%- include("../partials/datetime.ejs") %>
+  <head>
+    <%- include("../partials/head.ejs") %> <%-
+    include("../partials/admin-head.ejs") %>
+    <title>Register</title>
+  </head>
 
-<div class="admin-container">  
+  <body>
+    <%- include("../partials/datetime.ejs") %>
 
-    <div class="content-box">
+    <div class="admin-container">
+      <div class="content-box">
         <div class="header">
-            <h1>Register Account</h1>
+          <h1>Register Account</h1>
         </div>
         <div class="content">
-            <form class="admin-form" action="/shahporan/register" method="POST" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <div>
-                    <input type="text" id="name" name="name" placeholder="Full Name" required>
-                </div>
-                <div>
-                    <input type="text" id="email" name="email" placeholder="E-mail address" required>
-                </div>
-                <div>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                </div>
-                <div>
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                </div>
-                <div>
-                    <label style="font-size: small; display:flex;" >
-                        <input type="checkbox" onclick="toggleShowPassword()"> Show Password
-                    </label>
-                </div>
-                <div style="margin-top: 20px;">
-                    <button type="submit">Submit registration</button>
-                </div>
-                <div style="margin-top: 20px;">
-                    <a style="font-size: small" >Already have an account? </a><a style="font-size: small" href="login">Log in</a>
-                </div>
-            </form>
+          <form
+            class="admin-form"
+            action="/shahporan/register"
+            method="POST"
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <div>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Full Name"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="E-mail address"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Username"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div>
+              <label style="font-size: small; display: flex">
+                <input type="checkbox" onclick="toggleShowPassword()" /> Show
+                Password
+              </label>
+            </div>
+            <div style="font-size: small; display: flex">
+              By clicking "Submit registration" below, you agree to our [
+              <a href="/docs/privacy-policy.docx">Privacy Policy</a>].
+            </div>
+            <div style="margin-top: 20px">
+              <button type="submit">Submit registration</button>
+            </div>
+            <div style="margin-top: 20px">
+              <a style="font-size: small">Already have an account? </a
+              ><a style="font-size: small" href="login">Log in</a>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </body>
 
-<script>
+  <script>
     function toggleShowPassword() {
-        const password = document.getElementById("password");
-        // If password is of type "password", change to text and vice versa.
-		password.type = password.type === "password" ? "text" : "password";
+      const password = document.getElementById("password");
+      // If password is of type "password", change to text and vice versa.
+      password.type = password.type === "password" ? "text" : "password";
     }
-</script>
+  </script>
+</html>

@@ -1,46 +1,75 @@
 <html lang="en">
-<%- include("../partials/head.ejs") %>
-<%- include("../partials/admin-head.ejs") %>
-<%- include("../partials/datetime.ejs") %>
+  <head>
+    <%- include("../partials/head.ejs") %> <%-
+    include("../partials/admin-head.ejs") %>
+    <title>Login</title>
+  </head>
 
-<div class="admin-container">  
-    <div class="content-box">
+  <body>
+    <%- include("../partials/datetime.ejs") %>
+
+    <div class="admin-container">
+      <div class="content-box">
         <div class="header">
-            <h1>Login</h1>
+          <h1>Login</h1>
         </div>
 
         <div class="content">
-            <% if(messages.error) { %>
-                <%= messages.error %>
-            <% } %>
-            
-            <form class="admin-form" action="/shahporan/login" method="POST" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <div>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                </div>
-                <div>
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                </div>
-                <div>
-                    <label style="font-size: small; display:flex;" >
-                        <input type="checkbox" onclick="toggleShowPassword()"> Show Password
-                    </label>
-                </div>
-                <div style="margin-top: 20px;">
-                    <button type="submit">Log in</button>
-                </div>
-                <div style="padding: 20px;">
-                    <a style="font-size: small" >Don't have an account? </a><a style="font-size: small" href="register">Register</a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+          <% if(messages.error) { %> <%= messages.error %> <% } %>
 
-<script>
+          <form
+            class="admin-form"
+            action="/shahporan/login"
+            method="POST"
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <div>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Username"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div>
+              <label style="font-size: small; display: flex">
+                <input type="checkbox" onclick="toggleShowPassword()" /> Show
+                Password
+              </label>
+            </div>
+            <div style="margin-top: 20px">
+              <button type="submit">Log in</button>
+            </div>
+            <div style="padding: 20px">
+              <a style="font-size: small">Don't have an account? </a
+              ><a style="font-size: small" href="register">Register</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
     function toggleShowPassword() {
-        const password = document.getElementById("password");
-        // If password is of type "password", change to text and vice versa.
-		password.type = password.type === "password" ? "text" : "password";
+      const password = document.getElementById("password");
+      // If password is of type "password", change to text and vice versa.
+      password.type = password.type === "password" ? "text" : "password";
     }
-</script>
+  </script>
+</html>
