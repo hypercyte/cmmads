@@ -31,7 +31,10 @@
                 <td><%= announcement.Title %></td>
                 <td><%= announcement.Content %></td>
                 <td>
-                  <button onclick="editAnnouncement('<%= announcement.ID %>', '<%= announcement.Title %>', '<%= announcement.Content %>')" name="edit">
+                  <button
+                    onclick="editAnnouncement('<%= announcement.ID %>', '<%= announcement.Title %>', '<%= announcement.Content %>')"
+                    name="edit"
+                  >
                     Edit
                   </button>
                 </td>
@@ -67,7 +70,7 @@
 
         <div class="content">
           <form class="admin-form">
-            <input id="announcement-id" type="hidden" />
+            <input id="announcement-id" type="hidden" name="editID" />
 
             <label>Title</label>
             <input id="announcement-title" type="text" name="new_title" />
@@ -88,7 +91,9 @@
     <script>
       // Closing the edit menu
 
-      const backgroundBlur = document.getElementById("admin-edit-background-blur");
+      const backgroundBlur = document.getElementById(
+        "admin-edit-background-blur"
+      );
       const mainEditBox = document.getElementById("main-edit-box");
       const editCloseBtn = document.getElementById("admin-edit-close");
 
@@ -99,7 +104,7 @@
       const closeEditMenu = () => {
         backgroundBlur.style.display = "None";
         mainEditBox.style.display = "None";
-      }
+      };
 
       backgroundBlur.addEventListener("click", closeEditMenu);
       editCloseBtn.addEventListener("click", closeEditMenu);
@@ -111,7 +116,7 @@
 
         backgroundBlur.style.display = "block";
         mainEditBox.style.display = "block";
-      }
+      };
     </script>
   </body>
 </html>
