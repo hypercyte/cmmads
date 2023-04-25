@@ -10,6 +10,27 @@ const getAnnouncements = async () => {
     return resultset;
 }
 
+// Edit announcement
+const edit = async (id, newTitle, newContent) => {
+    const query = `UPDATE announcements SET \`Title\` = ?,\`Content\` = ? WHERE \`ID\` = ${id};`;
+    const params = [ newTitle, newContent ];
+    const resultset = await db.executeQuery(query, params);
+
+    return resultset;
+}
+
+// Edit announcement
+const add = async (title, content) => {
+    const query = `INSERT INTO announcements (\`Title\`,\`Content\`) VALUES (? , ?);`;
+    const params = [ title, content ];
+    const resultset = await db.executeQuery(query, params);
+
+    return resultset;
+}
+
+
 module.exports = {
-    getAnnouncements
+    getAnnouncements,
+    edit,
+    add
 }

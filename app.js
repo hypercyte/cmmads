@@ -343,6 +343,29 @@ app.post('/shahporan/admin/delete-user', async (req, res) => {
     })
 })
 
+// POST route for editing an announcement
+app.post('/shahporan/admin/edit-announcement', async (req, res) => {
+    const announceID = req.body.editID;
+    const newTitle = req.body.newTitle;
+    const newContent = req.body.newContent;
+
+    announcementController.edit(announceID, newTitle, newContent)
+    .then(() => {
+        res.redirect('/shahporan/admin/announcement-management');
+    })
+})
+
+// POST route for adding an announcement
+app.post('/shahporan/admin/add-announcement', async (req, res) => {
+    const title = req.body.addTitle;
+    const content = req.body.addContent;
+
+    announcementController.add(title, content)
+    .then(() => {
+        res.redirect('/shahporan/admin/announcement-management');
+    })
+})
+
 // Serve files from public folder
 app.use(express.static('./public'));
 

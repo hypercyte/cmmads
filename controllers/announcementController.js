@@ -5,6 +5,16 @@ async function getAnnouncements() {
     return announcements;
 }
 
+async function edit(id, newTitle, newContent) {
+    await model.edit(id, newTitle, newContent);
+}
+
+async function add(title, content) {
+    await model.add(title, content);
+}
+
 module.exports = {
-    getAnnouncements
+    getAnnouncements,
+    edit,
+    add
 }

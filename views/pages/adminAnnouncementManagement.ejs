@@ -60,6 +60,28 @@
         </div>
       </div>
 
+      <!-- Add announcement -->
+      <div class="content-box">
+        <div class="header">
+          <h1>Add Announcement</h1>
+        </div>
+        <div class="content">
+          <form
+            class="admin-form"
+            action="/shahporan/admin/add-announcement"
+            method="POST"
+          >
+            <label for="announceTitle">Title</label>
+            <input type="text" id="addTitle" name="addTitle" />
+
+            <label for="announceContent">Content</label>
+            <input type="text" id="addContent" name="addContent" />
+
+            <button type="submit">Add Announcement</button>
+          </form>
+        </div>
+      </div>
+
       <div id="admin-edit-background-blur">&nbsp;</div>
 
       <div class="admin-edit-box" id="main-edit-box">
@@ -69,16 +91,20 @@
         </div>
 
         <div class="content">
-          <form class="admin-form">
+          <form
+            class="admin-form"
+            action="/shahporan/admin/edit-announcement"
+            method="POST"
+          >
             <input id="announcement-id" type="hidden" name="editID" />
 
             <label>Title</label>
-            <input id="announcement-title" type="text" name="new_title" />
+            <input id="announcement-title" type="text" name="newTitle" />
             <label>Content</label>
             <input
               id="announcement-content"
               type="text"
-              name="new-content"
+              name="newContent"
               value=""
             />
 
