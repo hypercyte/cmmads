@@ -210,6 +210,12 @@ app.post('/shahporan/login', passport.authenticate('local', {
     failureFlash: true
 }))
 
+// POST route for logout
+app.post('/shahporan/logout', (req, res) => {
+    req.logOut;
+    res.redirect('/shahporan/login');
+})
+
 // POST route for register
 app.post('/shahporan/register', async (req, res) => {
     const name = req.body.name;
