@@ -13,6 +13,8 @@ CMMADS - Centralised Mosque Management And Display System
 
 ### Step-by-step guide (Windows)
 
+0. In the project root folder, run `npm i` to get all the dependencies.
+
 1. If you don't have MySQL downloaded yet, you can download from here: https://dev.mysql.com/downloads/installer/
 
 2. Open MySQL 8.0 Command Line Client, and if first time set-up, make sure you set up the root user and passowrd. Know these!
