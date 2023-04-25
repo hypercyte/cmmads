@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/authModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/authModel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const db = require('../services/db'); // db service
+
+/**
+ * This function queries the database to find a user by their username.
+ * 
+ * @param {string} username The user's username
+ * @returns Result set of user found with this username
+ */
+async function insertNewUser(name, username, email, hash) {
+    try {
+        const query = `INSERT INTO users (
+            \`name\`,
+            \`username\`,
+            \`email\`,
+            \`hash\`,
+            \`active\`,
+            \`isAdmin\`
+        ) VALUES (
+            '${name}',
+            '${username}',
+            '${email}',
+            '${hash}',
+            false,
+            false
+        );`; 
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * This function queries the database to find a user by their username.
+ * 
+ * @param {string} username The user's username
+ * @returns Result set of user found with this username
+ */
+async function findUser(username) {
+    try {
+        const query = `SELECT * FROM users WHERE \`username\` = '${username}'`;
+        const resultset = await db.executeQuery(query);
+        console.log("Found user:");
+        console.log(resultset);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+/**
+ * This function queries the database to find a user by their ID.
+ * 
+ * @param {number} id The user ID
+ * @returns Result set of user found with this ID
+ */
+async function findUserByID(id) {
+    try {
+        const query = `SELECT * FROM users WHERE \`ID\` = '${id}'`;
+        const resultset = await db.executeQuery(query);
+        console.log("Found user by ID:");
+        console.log(resultset);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+/**
+ * This function queries the database and finds all activated users.
+ * 
+ * @returns Result set of all active users.
+ */
+async function getActiveUsers() {
+    try {
+        const query = `SELECT * FROM users WHERE active = '1';`;
+        const resultset = await db.executeQuery(query);
+        console.log(resultset);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+/**
+ * This function queries the database and finds all deactivated users.
+ * 
+ * @returns Result set of all inactive users.
+ */
+async function getInactiveUsers() {
+    try {
+        const query = `SELECT * FROM users WHERE active = '0';`;
+        const resultset = await db.executeQuery(query);
+        console.log(resultset);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+/**
+ * This function takes a user ID and updates their entry in the database to make them an admin user.
+ * 
+ * @param {number} id The user ID
+ * @returns SQL insert result object
+ */
+async function makeAdmin(id) {
+    try {
+        const query = `UPDATE users SET \`isAdmin\` = 1 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * This function takes a user ID and updates their entry in the database to make them a normal user.
+ * 
+ * @param {number} id The user ID
+ * @returns SQL insert result object
+ */
+async function removeAdmin(id) {
+    try {
+        const query = `UPDATE users SET \`isAdmin\` = 0 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * This function takes a user ID and updates their entry to make them an active user.
+ * 
+ * @param {number} id The user ID
+ * @returns SQL insert result object
+ */
+async function activateUser(id) {
+    try {
+        const query = `UPDATE users SET \`active\` = 1 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * This function takes a user ID and updates their entry to make them an inactive user.
+ * 
+ * @param {number} id The user ID
+ * @returns SQL insert result object
+ */
+async function deactivateUser(id) {
+    try {
+        const query = `UPDATE users SET \`active\` = 0 WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * This function takes a user ID and removes their data.
+ * 
+ * @param {number} id The user ID
+ * @returns SQL insert result object
+ */
+async function deleteUser(id) {
+    try {
+        const query = `DELETE FROM users WHERE \`ID\` = ${id};`;
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+
+module.exports = {
+    insertNewUser,
+    findUser,
+    findUserByID,
+    getActiveUsers,
+    getInactiveUsers,
+    makeAdmin,
+    removeAdmin,
+    activateUser,
+    deactivateUser,
+    deleteUser
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateUser">activateUser</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#approveEvent">approveEvent</a></li><li><a href="global.html#checkForPrayerTimes">checkForPrayerTimes</a></li><li><a href="global.html#createPrayerTable">createPrayerTable</a></li><li><a href="global.html#createPrayerTimesTable">createPrayerTimesTable</a></li><li><a href="global.html#deactivateUser">deactivateUser</a></li><li><a href="global.html#deleteRoom">deleteRoom</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#denyEvent">denyEvent</a></li><li><a href="global.html#edit">edit</a></li><li><a href="global.html#executeQuery">executeQuery</a></li><li><a href="global.html#exportPrayerTimes">exportPrayerTimes</a></li><li><a href="global.html#findEventByID">findEventByID</a></li><li><a href="global.html#findEventsByUserID">findEventsByUserID</a></li><li><a href="global.html#findRoomByID">findRoomByID</a></li><li><a href="global.html#findUser">findUser</a></li><li><a href="global.html#findUserByID">findUserByID</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getActiveUsers">getActiveUsers</a></li><li><a href="global.html#getAnnouncements">getAnnouncements</a></li><li><a href="global.html#getApprovedEvents">getApprovedEvents</a></li><li><a href="global.html#getEvents">getEvents</a></li><li><a href="global.html#getInactiveUsers">getInactiveUsers</a></li><li><a href="global.html#getMonth">getMonth</a></li><li><a href="global.html#getPrayerTimes">getPrayerTimes</a></li><li><a href="global.html#getRooms">getRooms</a></li><li><a href="global.html#getSubscribers">getSubscribers</a></li><li><a href="global.html#getTomorrowsDate">getTomorrowsDate</a></li><li><a href="global.html#getUnapprovedEvents">getUnapprovedEvents</a></li><li><a href="global.html#importedPrayerTimes">importedPrayerTimes</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#insertNewEvent">insertNewEvent</a></li><li><a href="global.html#insertNewRoom">insertNewRoom</a></li><li><a href="global.html#insertNewUser">insertNewUser</a></li><li><a href="global.html#makeAdmin">makeAdmin</a></li><li><a href="global.html#removeAdmin">removeAdmin</a></li><li><a href="global.html#sendPrayerTimes">sendPrayerTimes</a></li><li><a href="global.html#subscribe">subscribe</a></li><li><a href="global.html#unsubscribe">unsubscribe</a></li><li><a href="global.html#updatePrayerTimes">updatePrayerTimes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 25 2023 13:59:43 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

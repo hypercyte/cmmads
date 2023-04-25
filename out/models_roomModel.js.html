@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/roomModel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/roomModel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const db = require('../services/db'); // db service
+
+/**
+ * This function inserts a new room into the database.
+ * 
+ * @param {string} location 
+ */
+async function insertNewRoom(location) {
+    try {
+        const query = `INSERT INTO Rooms (
+            \`location\`
+        ) VALUES (
+            '${location}'
+        );`; 
+        const resultset = await db.executeQuery(query); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * This function deletes a room from the database.
+ * 
+ * @param {number} id 
+ */
+async function deleteRoom(id) {
+    try {
+        const query = `DELETE FROM Rooms
+            WHERE \`ID\` = ?;`
+        const params = [id];
+        const resultset = await db.executeQuery(query, params); // execute query
+        console.log(resultset);
+    } catch (err) {
+        throw err;
+    }
+}
+
+/**
+ * This function finds a room from the database.
+ * 
+ * @param {number} id 
+ * @returns Result set containing the room found if any.
+ */
+async function findRoomByID(id) {
+    try {
+        const query = `SELECT * FROM Rooms WHERE \`ID\` = '${id}'`;
+        const resultset = await db.executeQuery(query);
+        console.log("Found room:");
+        console.log(resultset);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+/**
+ * This function gets all the rooms in the database.
+ * 
+ * @returns Result set of all rooms
+ */
+async function getRooms() {
+    try {
+        const query = `SELECT * FROM Rooms`;
+        const resultset = await db.executeQuery(query);
+        return resultset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports = {
+    insertNewRoom,
+    deleteRoom,
+    getRooms,
+    findRoomByID
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateUser">activateUser</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#approveEvent">approveEvent</a></li><li><a href="global.html#checkForPrayerTimes">checkForPrayerTimes</a></li><li><a href="global.html#createPrayerTable">createPrayerTable</a></li><li><a href="global.html#createPrayerTimesTable">createPrayerTimesTable</a></li><li><a href="global.html#deactivateUser">deactivateUser</a></li><li><a href="global.html#deleteRoom">deleteRoom</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#denyEvent">denyEvent</a></li><li><a href="global.html#edit">edit</a></li><li><a href="global.html#executeQuery">executeQuery</a></li><li><a href="global.html#exportPrayerTimes">exportPrayerTimes</a></li><li><a href="global.html#findEventByID">findEventByID</a></li><li><a href="global.html#findEventsByUserID">findEventsByUserID</a></li><li><a href="global.html#findRoomByID">findRoomByID</a></li><li><a href="global.html#findUser">findUser</a></li><li><a href="global.html#findUserByID">findUserByID</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getActiveUsers">getActiveUsers</a></li><li><a href="global.html#getAnnouncements">getAnnouncements</a></li><li><a href="global.html#getApprovedEvents">getApprovedEvents</a></li><li><a href="global.html#getEvents">getEvents</a></li><li><a href="global.html#getInactiveUsers">getInactiveUsers</a></li><li><a href="global.html#getMonth">getMonth</a></li><li><a href="global.html#getPrayerTimes">getPrayerTimes</a></li><li><a href="global.html#getRooms">getRooms</a></li><li><a href="global.html#getSubscribers">getSubscribers</a></li><li><a href="global.html#getTomorrowsDate">getTomorrowsDate</a></li><li><a href="global.html#getUnapprovedEvents">getUnapprovedEvents</a></li><li><a href="global.html#importedPrayerTimes">importedPrayerTimes</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#insertNewEvent">insertNewEvent</a></li><li><a href="global.html#insertNewRoom">insertNewRoom</a></li><li><a href="global.html#insertNewUser">insertNewUser</a></li><li><a href="global.html#makeAdmin">makeAdmin</a></li><li><a href="global.html#removeAdmin">removeAdmin</a></li><li><a href="global.html#sendPrayerTimes">sendPrayerTimes</a></li><li><a href="global.html#subscribe">subscribe</a></li><li><a href="global.html#unsubscribe">unsubscribe</a></li><li><a href="global.html#updatePrayerTimes">updatePrayerTimes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 25 2023 13:59:43 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/telegramBotController.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/telegramBotController.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const model = require('../models/telegramBotModel');
+const prayerController = require('./prayerController');
+const telegramBot = require('node-telegram-bot-api');
+const cron = require('node-cron');
+const { format } = require('path');
+require('dotenv').config();
+const token = process.env.TELEGRAM_TOKEN;
+const bot = new telegramBot(token, { polling: true });
+
+// Subscribe a user to receive daily prayer time updates, and post today's prayer time.
+bot.onText(/\/start/, (msg) => {
+    const id = msg.chat.id;
+    subscribe(id);
+    bot.sendMessage(id, "Assalaamu 'Alaykum. You will now receive salah times on a daily basis. If you would like these to stop, type /stop");
+    prayerController.getPrayerTimes()
+    .then(prayers => {
+        sendPrayerTimes(id, prayers, 1);
+    })
+});
+
+// Schedule daily prayer time message at 21:00.
+// 0th minute, 21st Hour, *Every day, *Every month, *Every day of week.
+cron.schedule('0 21 * * *', () => {
+    prayerController.getPrayerTimes()
+    .then(prayers => {
+        getSubscribers()
+        .then((subscribers) => {
+            subscribers.forEach(subscriber => {
+                sendPrayerTimes(subscriber.ChatID, prayers, 1);
+            })
+        })
+    })
+})
+
+// Unsubscribe a user's chat ID from receiving prayer time updates.
+bot.onText(/\/stop/, (msg) => {
+    const id = msg.chat.id;
+    unsubscribe(id);
+    bot.sendMessage(id, "You will no longer receive salah time updates.");
+});
+
+/**
+ * This function sends user(s) a message with the prayer times of either today or tomorrow.
+ * 
+ * @param {number} id The chat ID
+ * @param {Array.&lt;Object>} prayers The prayer table for today and tomorrow
+ * @param {number} day Is this for today or tomorrow?
+ */
+function sendPrayerTimes(id, prayers, day) {
+    bot.sendMessage(id, `&lt;b>${ day ? "Tomorrow" : "Today"}&lt;/b>\n` +
+    `&lt;b>${formatDate()}&lt;/b>\n\n` +
+    `&lt;u>Salah start times:&lt;/u>\n` +
+    `Fajr: ${prayers[day]['fajr'].slice(0,5)}am\n` +
+    `Dhuhr: ${prayers[day]['dhuhr'].slice(0,5)}pm\n` +
+    `'Asr (1st Mithl): ${prayers[day]['asr_1'].slice(0,5)}pm\n` +
+    `'Asr (2nd Mithl): ${prayers[day]['asr_2'].slice(0,5)}pm\n` +
+    `Maghrib: ${prayers[day]['maghrib'].slice(0,5)}pm\n` +
+    `Isha': ${prayers[day]['isha'].slice(0,5)}pm\n\n` +
+    `&lt;u>Jama'ah times:&lt;/u>\n` +
+    `Fajr Jama'ah: ${prayers[day]['fajr_jamaah'].slice(0,5)}am\n` +
+    `Dhuhr: ${prayers[day]['dhuhr_jamaah'].slice(0,5)}pm\n` +
+    `'Asr Jama'ah: ${prayers[day]['asr_jamaah'].slice(0,5)}pm\n` +
+    `Maghrib Jama'ah: ${prayers[day]['maghrib_jamaah'].slice(0,5)}pm\n` +
+    `Isha' Jama'ah: ${prayers[day]['isha_jamaah'].slice(0,5)}pm\n\n`,
+    {parse_mode: "HTML"})
+}
+
+/**
+ * Fate formatter to return date in word format
+ * 
+ * @returns A formatted date in the format "Day, Date Month Year" in words.
+ */
+function formatDate() {
+    const tomorrow = getTomorrowsDate();
+    const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    const days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ];
+    const day = tomorrow.getDay();
+    const date = tomorrow.getDate();
+    const month = tomorrow.getMonth();
+    const year = tomorrow.getFullYear();
+    return `${days[day]}, ${date} ${months[month]} ${year}`
+}
+
+/**
+ * Get tomorrow's date.
+ * 
+ * @returns The date for tomorrow.
+ */
+function getTomorrowsDate() {
+    const today = new Date();
+    return new Date(today.getTime() + (24 * 60 * 60 * 1000))//.toISOString().slice(0,10);
+}
+
+/**
+ * Subscribe a user to daily prayer times.
+ * 
+ * @param {number} id 
+ */
+async function subscribe(id) {
+    await model.subscribe(id);
+}
+
+/**
+ * Unubscribe a user from daily prayer times.
+ * 
+ * @param {number} id 
+ */
+async function unsubscribe(id) {
+    await model.unsubscribe(id);
+}
+
+/**
+ * Get a list of subscribed chat IDs.
+ * 
+ * @param {number} id 
+ */
+async function getSubscribers() {
+    return await model.getSubscribers();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateUser">activateUser</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#approveEvent">approveEvent</a></li><li><a href="global.html#checkForPrayerTimes">checkForPrayerTimes</a></li><li><a href="global.html#createPrayerTable">createPrayerTable</a></li><li><a href="global.html#createPrayerTimesTable">createPrayerTimesTable</a></li><li><a href="global.html#deactivateUser">deactivateUser</a></li><li><a href="global.html#deleteRoom">deleteRoom</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#denyEvent">denyEvent</a></li><li><a href="global.html#edit">edit</a></li><li><a href="global.html#executeQuery">executeQuery</a></li><li><a href="global.html#exportPrayerTimes">exportPrayerTimes</a></li><li><a href="global.html#findEventByID">findEventByID</a></li><li><a href="global.html#findEventsByUserID">findEventsByUserID</a></li><li><a href="global.html#findRoomByID">findRoomByID</a></li><li><a href="global.html#findUser">findUser</a></li><li><a href="global.html#findUserByID">findUserByID</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getActiveUsers">getActiveUsers</a></li><li><a href="global.html#getAnnouncements">getAnnouncements</a></li><li><a href="global.html#getApprovedEvents">getApprovedEvents</a></li><li><a href="global.html#getEvents">getEvents</a></li><li><a href="global.html#getInactiveUsers">getInactiveUsers</a></li><li><a href="global.html#getMonth">getMonth</a></li><li><a href="global.html#getPrayerTimes">getPrayerTimes</a></li><li><a href="global.html#getRooms">getRooms</a></li><li><a href="global.html#getSubscribers">getSubscribers</a></li><li><a href="global.html#getTomorrowsDate">getTomorrowsDate</a></li><li><a href="global.html#getUnapprovedEvents">getUnapprovedEvents</a></li><li><a href="global.html#importedPrayerTimes">importedPrayerTimes</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#insertNewEvent">insertNewEvent</a></li><li><a href="global.html#insertNewRoom">insertNewRoom</a></li><li><a href="global.html#insertNewUser">insertNewUser</a></li><li><a href="global.html#makeAdmin">makeAdmin</a></li><li><a href="global.html#removeAdmin">removeAdmin</a></li><li><a href="global.html#sendPrayerTimes">sendPrayerTimes</a></li><li><a href="global.html#subscribe">subscribe</a></li><li><a href="global.html#unsubscribe">unsubscribe</a></li><li><a href="global.html#updatePrayerTimes">updatePrayerTimes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Apr 25 2023 13:59:43 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
