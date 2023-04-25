@@ -20,7 +20,7 @@ bot.onText(/\/start/, (msg) => {
 });
 
 // 5th minute, 0th Hour, *Every day, *Every month, *Every day of week.
-cron.schedule('0 11 * * *', () => {
+cron.schedule('15 11 * * *', () => {
     prayerController.getPrayerTimes()
     .then(prayers => {
         getSubscribers()
