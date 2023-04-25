@@ -14,7 +14,7 @@ bot.onText(/\/start/, (msg) => {
     bot.sendMessage(id, "Assalaamu 'Alaykum. You will now receive salah times on a daily basis. If you would like these to stop, type /stop");
     prayerController.getPrayerTimes()
     .then(prayers => {
-        sendPrayerTimes(id, prayers, 1);
+        sendPrayerTimes(id, prayers, 0);
     })
 });
 
