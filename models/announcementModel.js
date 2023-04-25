@@ -1,8 +1,6 @@
 const db = require('../services/db');
-
-// Get announcements from the database
-
 /**
+ * This function gets all announcements from the database.
  * 
  * @returns Result set of announcements, pulled from the database.
  */
@@ -15,13 +13,12 @@ const getAnnouncements = async () => {
     return resultset;
 }
 
-// Edit announcement
-
 /**
+ * This function edits announcements in the database.
  * 
- * @param {number} id 
- * @param {string} newTitle 
- * @param {string} newContent 
+ * @param {number} id The announcement ID
+ * @param {string} newTitle The edited title
+ * @param {string} newContent The edited content
  */
 const edit = async (id, newTitle, newContent) => {
     const query = `UPDATE announcements SET \`Title\` = ?,\`Content\` = ? WHERE \`ID\` = ${id};`;
@@ -32,9 +29,10 @@ const edit = async (id, newTitle, newContent) => {
 // Add announcement
 
 /**
+ * This function adds announcements in the database.
  * 
- * @param {string} title 
- * @param {string} content 
+ * @param {string} title The announcement title
+ * @param {string} content The announcement content
  */
 const add = async (title, content) => {
     const query = `INSERT INTO announcements (\`Title\`,\`Content\`) VALUES (? , ?);`;

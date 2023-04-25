@@ -1,6 +1,10 @@
 const db = require('../services/db'); // db service
 
-// Enter new room data into the database
+/**
+ * This function inserts a new room into the database.
+ * 
+ * @param {string} location 
+ */
 async function insertNewRoom(location) {
     try {
         const query = `INSERT INTO Rooms (
@@ -15,7 +19,11 @@ async function insertNewRoom(location) {
     }
 }
 
-// Enter new room data into the database
+/**
+ * This function deletes a room from the database.
+ * 
+ * @param {number} id 
+ */
 async function deleteRoom(id) {
     try {
         const query = `DELETE FROM Rooms
@@ -28,6 +36,12 @@ async function deleteRoom(id) {
     }
 }
 
+/**
+ * This function finds a room from the database.
+ * 
+ * @param {number} id 
+ * @returns Result set containing the room found if any.
+ */
 async function findRoomByID(id) {
     try {
         const query = `SELECT * FROM Rooms WHERE \`ID\` = '${id}'`;
@@ -40,6 +54,11 @@ async function findRoomByID(id) {
     }
 }
 
+/**
+ * This function gets all the rooms in the database.
+ * 
+ * @returns Result set of all rooms
+ */
 async function getRooms() {
     try {
         const query = `SELECT * FROM Rooms`;

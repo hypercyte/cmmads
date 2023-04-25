@@ -3,6 +3,13 @@ const bcrypt = require('bcrypt');
 
 const Strategy = require('passport-local').Strategy
 
+/**
+ * This function initialises the passport functionality.
+ * 
+ * @param {passport} passport The passport module
+ * @param { function(string) : Array.<Object> } getUser Function which will find the user by their user name
+ * @param { function(string) : Array.<Object> } getUserByID Function which will find the user by their ID
+ */
 function init(passport, getUser, getUserByID) {
     const authenticateUser = async (username, password, done) => {
         const user = await getUser(username);

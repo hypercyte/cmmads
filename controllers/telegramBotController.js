@@ -4,11 +4,10 @@ const telegramBot = require('node-telegram-bot-api');
 const cron = require('node-cron');
 const { format } = require('path');
 require('dotenv').config();
-
 const token = process.env.TELEGRAM_TOKEN;
-
 const bot = new telegramBot(token, { polling: true });
 
+// Subscribe a user to receive daily prayer time updates, and post today's prayer time.
 bot.onText(/\/start/, (msg) => {
     const id = msg.chat.id;
     subscribe(id);
@@ -19,6 +18,7 @@ bot.onText(/\/start/, (msg) => {
     })
 });
 
+// Schedule daily prayer time message at 21:00.
 // 0th minute, 21st Hour, *Every day, *Every month, *Every day of week.
 cron.schedule('0 21 * * *', () => {
     prayerController.getPrayerTimes()
@@ -32,24 +32,20 @@ cron.schedule('0 21 * * *', () => {
     })
 })
 
-// Send announcement
-
-// cron.schedule('30 10 * * *', () => {
-//     getSubscribers()
-//         .then((subscribers) => {
-//             subscribers.forEach(subscriber => {
-//                 bot.sendMessage(subscriber.ChatID, "\nالسلام عليكم ورحمة الله وبركاته");
-//                 bot.sendMessage(subscriber.ChatID, "I'm going to set the prayer times to send at 11am as a test, and it should display the times for <b>tomorrow</b> inshaAllah. If this works, I'll probably schedule the message for around 8-9pm ish.", {parse_mode: "HTML"});
-//             })
-//         })
-// })
-
+// Unsubscribe a user's chat ID from receiving prayer time updates.
 bot.onText(/\/stop/, (msg) => {
     const id = msg.chat.id;
     unsubscribe(id);
     bot.sendMessage(id, "You will no longer receive salah time updates.");
 });
 
+/**
+ * This function sends user(s) a message with the prayer times of either today or tomorrow.
+ * 
+ * @param {number} id The chat ID
+ * @param {Array.<Object>} prayers The prayer table for today and tomorrow
+ * @param {number} day Is this for today or tomorrow?
+ */
 function sendPrayerTimes(id, prayers, day) {
     bot.sendMessage(id, `<b>${ day ? "Tomorrow" : "Today"}</b>\n` +
     `<b>${formatDate()}</b>\n\n` +
@@ -69,6 +65,11 @@ function sendPrayerTimes(id, prayers, day) {
     {parse_mode: "HTML"})
 }
 
+/**
+ * Fate formatter to return date in word format
+ * 
+ * @returns A formatted date in the format "Day, Date Month Year" in words.
+ */
 function formatDate() {
     const tomorrow = getTomorrowsDate();
     const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
@@ -80,19 +81,39 @@ function formatDate() {
     return `${days[day]}, ${date} ${months[month]} ${year}`
 }
 
+/**
+ * Get tomorrow's date.
+ * 
+ * @returns The date for tomorrow.
+ */
 function getTomorrowsDate() {
     const today = new Date();
     return new Date(today.getTime() + (24 * 60 * 60 * 1000))//.toISOString().slice(0,10);
 }
 
+/**
+ * Subscribe a user to daily prayer times.
+ * 
+ * @param {number} id 
+ */
 async function subscribe(id) {
     await model.subscribe(id);
 }
 
+/**
+ * Unubscribe a user from daily prayer times.
+ * 
+ * @param {number} id 
+ */
 async function unsubscribe(id) {
     await model.unsubscribe(id);
 }
 
+/**
+ * Get a list of subscribed chat IDs.
+ * 
+ * @param {number} id 
+ */
 async function getSubscribers() {
     return await model.getSubscribers();
 }
