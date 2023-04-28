@@ -48,7 +48,7 @@ bot.onText(/\/stop/, (msg) => {
  */
 function sendPrayerTimes(id, prayers, day) {
     bot.sendMessage(id, `<b>${ day ? "Tomorrow" : "Today"}</b>\n` +
-    `<b>${formatDate()}</b>\n\n` +
+    `<b>${formatDate(day)}</b>\n\n` +
     `<u>Salah start times:</u>\n` +
     `Fajr: ${prayers[day]['fajr'].slice(0,5)}am\n` +
     `Dhuhr: ${prayers[day]['dhuhr'].slice(0,5)}pm\n` +
@@ -70,14 +70,14 @@ function sendPrayerTimes(id, prayers, day) {
  * 
  * @returns A formatted date in the format "Day, Date Month Year" in words.
  */
-function formatDate() {
-    const tomorrow = getTomorrowsDate();
+function formatDate(selectedDay) {
+    const daySelected = selectedDay ? getTomorrowsDate() : new Date();
     const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-    const days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ];
-    const day = tomorrow.getDay();
-    const date = tomorrow.getDate();
-    const month = tomorrow.getMonth();
-    const year = tomorrow.getFullYear();
+    const days = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+    const day = daySelected.getDay();
+    const date = daySelected.getDate();
+    const month = daySelected.getMonth();
+    const year = daySelected.getFullYear();
     return `${days[day]}, ${date} ${months[month]} ${year}`
 }
 
